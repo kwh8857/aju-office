@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29">
+    <g>
+        <g>
+            <text fill="#262626" font-family="NotoSansCJKkr-Regular, Noto Sans CJK KR" font-size="15px" text-decoration="underline" transform="translate(-371 -140) translate(380.457 160.5)">
+                <tspan x="0" y="0">U</tspan>
+            </text>
+        </g>
+        <path fill="none" d="M0 0H29V29H0z" transform="translate(-371 -140) translate(371 140)"/>
+    </g>
+</svg>

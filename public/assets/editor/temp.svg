@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="89" height="33" viewBox="0 0 89 33">
+    <defs>
+        <style>
+            .cls-3{fill:#dbdbdb}
+        </style>
+    </defs>
+    <g id="temp" transform="translate(-692 -209)">
+        <g id="image_temp2" transform="translate(209 -105)">
+            <g id="사각형_869" fill="none" stroke="#dbdbdb" transform="translate(483 314)">
+                <rect width="89" height="33" stroke="none" rx="5"/>
+                <rect width="88" height="32" x=".5" y=".5" rx="4.5"/>
+            </g>
+            <text id="이미지" fill="#898989" font-family="NotoSansCJKkr-Regular, Noto Sans CJK KR" font-size="12px" transform="translate(526 335)">
+                <tspan x="0" y="0">이미지</tspan>
+            </text>
+        </g>
+        <g id="image" transform="translate(-19 -63)">
+            <path id="합치기_2" d="M12.21 12H0L9.593 0l6.02 7.53L18.6 3.6 25 12z" class="cls-3" transform="translate(722 284)"/>
+            <circle id="타원_64" cx="2.5" cy="2.5" r="2.5" class="cls-3" transform="translate(737 281)"/>
+        </g>
+    </g>
+</svg>

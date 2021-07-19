@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="89" height="33" viewBox="0 0 89 33">
+    <g>
+        <g>
+            <g fill="none" stroke="#dbdbdb" transform="translate(-692 -209) translate(209 -105) translate(483 314)">
+                <rect width="89" height="33" stroke="none" rx="5"/>
+                <rect width="88" height="32" x=".5" y=".5" rx="4.5"/>
+            </g>
+            <text fill="#898989" font-family="NotoSansCJKkr-Regular, Noto Sans CJK KR" font-size="12px" transform="translate(-692 -209) translate(209 -105) translate(526 335)">
+                <tspan x="0" y="0">유튜브</tspan>
+            </text>
+        </g>
+        <path fill="#dbdbdb" d="M22.679 6.93a2.776 2.776 0 0 0-1.953-1.966C19 4.5 12.1 4.5 12.1 4.5s-6.908 0-8.63.465A2.776 2.776 0 0 0 1.512 6.93a29.118 29.118 0 0 0-.462 5.352 29.118 29.118 0 0 0 .462 5.352 2.734 2.734 0 0 0 1.953 1.934c1.723.465 8.63.465 8.63.465s6.908 0 8.63-.465a2.734 2.734 0 0 0 1.953-1.934 29.118 29.118 0 0 0 .462-5.352 29.118 29.118 0 0 0-.462-5.352zM9.836 15.566V9l5.774 3.285-5.774 3.281z" transform="translate(-692 -209) translate(703.405 213.5)"/>
+    </g>
+</svg>

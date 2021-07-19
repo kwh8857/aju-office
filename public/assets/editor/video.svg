@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="89" height="33" viewBox="0 0 89 33">
+    <g>
+        <g>
+            <g fill="none" stroke="#dbdbdb" transform="translate(-692 -209) translate(209 -105) translate(483 314)">
+                <rect width="89" height="33" stroke="none" rx="5"/>
+                <rect width="88" height="32" x=".5" y=".5" rx="4.5"/>
+            </g>
+            <text fill="#898989" font-family="NotoSansCJKkr-Regular, Noto Sans CJK KR" font-size="12px" transform="translate(-692 -209) translate(209 -105) translate(526 335)">
+                <tspan x="0" y="0">동영상</tspan>
+            </text>
+        </g>
+        <path fill="#dbdbdb" d="M12.993 4.5H1.847A1.847 1.847 0 0 0 0 6.347v11.146a1.847 1.847 0 0 0 1.847 1.847h11.146a1.847 1.847 0 0 0 1.847-1.847V6.347A1.847 1.847 0 0 0 12.993 4.5zm7.32 1.457l-4.236 2.922v6.083l4.236 2.918a1.239 1.239 0 0 0 1.948-1V6.954a1.24 1.24 0 0 0-1.949-.997z" transform="translate(-692 -209) translate(704 213.58)"/>
+    </g>
+</svg>

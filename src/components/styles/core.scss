@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  border: none;
+  scrollbar-width: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+// body * {
+//   -webkit-font-smoothing: subpixel-antialiased !important;
+//   text-rendering: optimizeLegibility !important;
+// }
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: black;
+}
+
+ul,
+li,
+ol {
+  list-style: none;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+input,
+p,
+textarea {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  resize: none;
+  font-family: 'Noto Sans KR',
+    sans-serif;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.txt-bold {
+  font-weight: 700;
+}
+
+.txt-medium {
+  font-weight: 500;
+}
+
+img {
+  width: 100%;
+}

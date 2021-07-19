@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="49.13" height="55.613" viewBox="0 0 49.13 55.613">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#c3c3c3;stroke-miterlimit:10;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="file" transform="translate(-55 -274.136)">
+        <path id="패스_1021" d="M94.9 324.012H56v-48.876h28.427L94.9 286.607z" class="cls-1"/>
+        <circle id="타원_115" cx="10.473" cy="10.473" r="10.473" fill="#fafafa" stroke="#c3c3c3" stroke-miterlimit="10" stroke-width="2px" transform="translate(82.183 307.803)"/>
+        <g id="그룹_4230" transform="translate(88.417 314.037)">
+            <path id="선_49" d="M0 0L8.478 0" class="cls-1" transform="translate(0 4.239)"/>
+            <path id="선_50" d="M0 0L0 8.478" class="cls-1" transform="translate(4.239)"/>
+        </g>
+        <path id="선_51" d="M0 0L23.939 0" class="cls-1" transform="translate(62.982 286.607)"/>
+        <path id="선_52" d="M0 0L23.939 0" class="cls-1" transform="translate(62.982 293.589)"/>
+        <path id="선_53" d="M0 0L23.939 0" class="cls-1" transform="translate(62.982 300.571)"/>
+        <path id="선_54" d="M0 0L12.468 0" class="cls-1" transform="translate(62.982 307.554)"/>
+    </g>
+</svg>

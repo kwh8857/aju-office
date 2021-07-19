@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="33" viewBox="0 0 80 33">
+    <g>
+        <g>
+            <g fill="none" stroke="#dbdbdb" transform="translate(-692 -209) translate(692 209)">
+                <rect width="80" height="33" stroke="none" rx="5"/>
+                <rect width="79" height="32" x=".5" y=".5" rx="4.5"/>
+            </g>
+            <text fill="#898989" font-family="NotoSansCJKkr-Regular, Noto Sans CJK KR" font-size="12px" transform="translate(-692 -209) translate(692 209) translate(44 21)">
+                <tspan x="0" y="0">링크</tspan>
+            </text>
+        </g>
+        <path fill="#dbdbdb" d="M5.528 17.153a4.128 4.128 0 0 1 4.125-4.125h5.322V10.5H9.653a6.653 6.653 0 0 0 0 13.306h5.322v-2.528H9.653a4.128 4.128 0 0 1-4.125-4.125zm5.455 1.331h10.645v-2.662H10.983zM22.959 10.5h-5.323v2.528h5.322a4.125 4.125 0 0 1 0 8.25h-5.322v2.528h5.322a6.653 6.653 0 0 0 0-13.306z" transform="translate(-692 -209) translate(699.388 208.348)"/>
+    </g>
+</svg>
