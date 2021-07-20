@@ -12,7 +12,7 @@ const initialState = {
   videolist: [],
   deletelist: [],
 };
-const database = (state = initialState, { type, idx, payload }) => {
+const database = (state = initialState, { type, idx, payload, index }) => {
   switch (type) {
     case "@layouts/INIT_DELETELIST": {
       let arr = state.deletelist;
@@ -22,7 +22,12 @@ const database = (state = initialState, { type, idx, payload }) => {
         deletelist: [...arr],
       };
     }
-
+    case "@layouts/RESET": {
+      return {
+        ...state,
+        editor: initialState.editor,
+      };
+    }
     case "@layouts/UPDATE_VIDEO": {
       let arr = state.videolist;
       state.videolist[idx] = payload;
@@ -52,6 +57,22 @@ const database = (state = initialState, { type, idx, payload }) => {
       return {
         ...state,
         editor: [...arr],
+      };
+    }
+    case "@layouts/CHANGE_SUMMARY": {
+      var str = state.editor;
+      str[idx].content.text = payload;
+      return {
+        ...state,
+        editor: [...str],
+      };
+    }
+    case "@layouts/CHANGE_SUMMARY_IMAGE": {
+      var edr = state.editor;
+      edr[idx].content.images[index] = payload;
+      return {
+        ...state,
+        editor: [...edr],
       };
     }
     default:

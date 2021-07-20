@@ -56,7 +56,7 @@ function Screen() {
       if (event.key === "Backspace" && foucsIdx !== 0) {
         const arr = template.slice();
         let nowTemplate = arr[foucsIdx];
-        if (nowTemplate.type !== "TITLE") {
+        if (nowTemplate.type !== "TITLE" && nowTemplate.type !== "SUMMARY") {
           setFoucsIdx(-1);
 
           if (
@@ -93,6 +93,12 @@ function Screen() {
       document.removeEventListener("keydown", deleteTem);
     };
   }, [foucsIdx, template, dispatch]);
+  useEffect(() => {
+    dispatch({
+      type: "@layouts/RESET",
+    });
+    return () => {};
+  }, []);
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId="tags" direction="vertical">
@@ -164,6 +170,8 @@ function Screen() {
                             provided={provided}
                             idx={idx}
                             template={template}
+                            focusIdx={foucsIdx}
+                            id={id}
                           />
                         );
                       }
