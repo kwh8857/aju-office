@@ -15,7 +15,7 @@ import TemplateVideo from "./Template/TemplateVideo";
 import Summary from "./Template/Summary";
 resetServerContext();
 
-function Screen() {
+function Screen({ temKey }) {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.database.editor);
   const [foucsIdx, setFoucsIdx] = useState(0);
@@ -98,7 +98,7 @@ function Screen() {
       type: "@layouts/RESET",
     });
     return () => {};
-  }, []);
+  }, [dispatch]);
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId="tags" direction="vertical">
@@ -172,6 +172,7 @@ function Screen() {
                             template={template}
                             focusIdx={foucsIdx}
                             id={id}
+                            temKey={temKey}
                           />
                         );
                       }

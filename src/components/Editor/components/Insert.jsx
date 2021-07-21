@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import firebaseApp from "../../../config/firebaseApp";
-
+import Resizer from "react-image-file-resizer";
 const dummy = [
   { img: "summary", type: "SUMMARY" },
   { img: "temp", type: "IMAGE" },
@@ -13,28 +13,48 @@ const dummy = [
 
 const Fstorage = firebaseApp.storage();
 
-function Insert({ setIsUp }) {
+function Insert({ setIsUp, temKey }) {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.database.editor);
-
-  const __imageUpload = useCallback((data64, name) => {
-    return new Promise((resolve, reject) => {
-      const data = data64.split(",")[1];
-      Fstorage.ref(`editor/${name}`)
-        .putString(data, "base64")
-        .then((result) => {
-          result.ref.getDownloadURL().then((downloadUrl) => {
-            resolve(downloadUrl);
+  const __imageUpload = useCallback(
+    (data64, name, resize) => {
+      return new Promise((resolve, reject) => {
+        const data = data64.split(",")[1];
+        const redata = resize.split(",")[1];
+        Fstorage.ref(`editor/${temKey}/${name}`)
+          .putString(data, "base64")
+          .then((result) => {
+            result.ref.getDownloadURL().then((downloadUrl) => {
+              Fstorage.ref(`editor/${temKey}/${name}-resize`)
+                .putString(redata, "base64")
+                .then((result) => {
+                  result.ref.getDownloadURL().then((resizeUrl) => {
+                    resolve({ url: downloadUrl, resize: resizeUrl });
+                  });
+                });
+            });
           });
-        });
-    });
-  }, []);
+      });
+    },
+    [temKey]
+  );
   const __fileReader = useCallback((file) => {
     return new Promise((resolve, reject) => {
       var reader = new FileReader();
       reader.onload = function (e) {
         const imageUrl = e.target.result;
-        resolve({ url: imageUrl, name: file.name });
+        Resizer.imageFileResizer(
+          file,
+          50,
+          50,
+          "JPEG",
+          100,
+          0,
+          (uri) => {
+            resolve({ url: imageUrl, resize: uri, name: file.name });
+          },
+          "base64"
+        );
       };
       reader.readAsDataURL(file);
     });
@@ -52,8 +72,8 @@ function Insert({ setIsUp }) {
       );
       base64.then((result) => {
         Promise.all(
-          result.map(({ url, name }) => {
-            const po = __imageUpload(url, name).then((result) => {
+          result.map(({ url, name, resize }) => {
+            const po = __imageUpload(url, name, resize).then((result) => {
               return {
                 type: "IMAGE",
                 content: result,

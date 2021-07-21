@@ -1,27 +1,28 @@
-import React, { useState, useCallback } from 'react';
-import VideoCard from './VideoCard';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useCallback } from "react";
+import VideoCard from "./VideoCard";
+import { useDispatch, useSelector } from "react-redux";
 
-function Video({ __close, template }) {
+function Video({ __close, template, temKey }) {
   const dispatch = useDispatch();
   const List = useSelector((state) => state.database.videolist);
+
   const [selectList, setSelectList] = useState([]);
   const __deleteList = useCallback(
     (idx) => {
       const arr = List.slice();
       arr.splice(idx, 1);
       dispatch({
-        type: '@layouts/INIT_VIDEO',
+        type: "@layouts/INIT_VIDEO",
         payload: arr,
       });
     },
-    [List, dispatch],
+    [List, dispatch]
   );
   const __updateTemplate = useCallback(() => {
     let arr = template.slice();
     selectList.forEach((item) => {
       arr.push({
-        type: 'VIDEO',
+        type: "VIDEO",
         content: item,
         id: `video-${
           new Date().getTime() - Math.floor(Math.random() * (100 - 1 + 1)) + 1
@@ -29,7 +30,7 @@ function Video({ __close, template }) {
       });
     });
     dispatch({
-      type: '@layouts/CHANGE_EDITOR',
+      type: "@layouts/CHANGE_EDITOR",
       payload: arr,
     });
     __close();
@@ -45,12 +46,12 @@ function Video({ __close, template }) {
       }
       setSelectList(arr);
     },
-    [selectList],
+    [selectList]
   );
   const __updateUpload = useCallback(
     (idx, upload, name, thumbnail) => {
       dispatch({
-        type: '@layouts/UPDATE_VIDEO',
+        type: "@layouts/UPDATE_VIDEO",
         idx,
         payload: {
           upload,
@@ -59,12 +60,12 @@ function Video({ __close, template }) {
         },
       });
     },
-    [dispatch],
+    [dispatch]
   );
   const __updateList = useCallback(
     (idx, url, name, thumbnail) => {
       dispatch({
-        type: '@layouts/UPDATE_VIDEO',
+        type: "@layouts/UPDATE_VIDEO",
         payload: {
           url,
           name,
@@ -73,7 +74,7 @@ function Video({ __close, template }) {
         idx,
       });
     },
-    [dispatch],
+    [dispatch]
   );
   const __uploadVideo = useCallback(
     (e) => {
@@ -83,11 +84,11 @@ function Video({ __close, template }) {
         arr.push(item);
       });
       dispatch({
-        type: '@layouts/INIT_VIDEO',
+        type: "@layouts/INIT_VIDEO",
         payload: arr,
       });
     },
-    [List, dispatch],
+    [List, dispatch]
   );
   return (
     <div className="popup-wrapper video">
@@ -125,13 +126,14 @@ function Video({ __close, template }) {
               __select={__selectVideo}
               selectList={selectList}
               idx={idx}
+              temKey={temKey}
             />
           );
         })}
       </div>
       <div
         className="link-btn"
-        style={selectList.length > 0 ? undefined : { backgroundColor: 'grey' }}
+        style={selectList.length > 0 ? undefined : { backgroundColor: "grey" }}
         onClick={() => {
           if (selectList.length > 0) {
             __updateTemplate();

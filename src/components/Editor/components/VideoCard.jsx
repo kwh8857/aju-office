@@ -9,6 +9,7 @@ function VideoCard({
   __select,
   selectList,
   __upload,
+  temKey,
 }) {
   const [video, setVideo] = useState(undefined);
   const [upload, setupload] = useState(undefined);
@@ -61,7 +62,7 @@ function VideoCard({
           .drawImage(video, 0, 0, canvas.width, canvas.height);
         var image = canvas.toDataURL();
         const base = image.split(",")[1];
-        Fstorage.ref(`editor/video/${data.name}/thumbnail`)
+        Fstorage.ref(`editor/${temKey}/video/${data.name}/thumbnail`)
           .putString(base, "base64")
           .then((result) => {
             result.ref.getDownloadURL().then((getDownloadURL) => {
@@ -76,7 +77,7 @@ function VideoCard({
       video.playsInline = true;
       video.play();
     });
-  }, [data]);
+  }, [data, temKey]);
   useEffect(() => {
     if (percent === 100 && video === undefined && upload) {
       upload.then((snapshot) => {
@@ -88,7 +89,6 @@ function VideoCard({
     return () => {};
   }, [percent, upload, idx, data.name, thumbnail, __update, video]);
   useEffect(() => {
-    console.log("데이터 감지");
     if (upload) {
       upload.on("state_changed", (snapshot) => {
         setUploadstate(snapshot);
@@ -100,13 +100,20 @@ function VideoCard({
   }, [upload]);
   useEffect(() => {
     //데이터가 file인경우 type이 존재
-
     if (data.type) {
-      console.log("업로드");
+      //이미 존재하는 이름의 비디오인지 확인
+      Fstorage.ref(`editor/${temKey}/video/${data.name}/video`)
+        .getDownloadURL()
+        .then((res) => {
+          //이부분 토스트 메세지 추가 필요
+          console.log(res);
+        })
+        .catch((err) => {
+          __withdrawThumbnail().then((result) => {
+            __uploadVideo(result);
+          });
+        });
       //썸네일 추출후에 비디오 업로드 시작
-      __withdrawThumbnail().then((result) => {
-        __uploadVideo(result);
-      });
     } else if (data.url) {
       setVideo(data.url);
       setthumbnail(data.thumbnail);
@@ -116,7 +123,7 @@ function VideoCard({
       setVideo(undefined);
       setthumbnail(undefined);
     };
-  }, [__uploadVideo, data, __withdrawThumbnail]);
+  }, [__uploadVideo, data, __withdrawThumbnail, temKey]);
   useEffect(() => {
     if (data.upload) {
       setupload(data.upload);
@@ -141,18 +148,18 @@ function VideoCard({
           />
         </div>
       </div>
-      <div
+      <img
         className="check_circle"
-        style={{
-          backgroundColor:
-            selectList.indexOf(video) > -1 ? "#3597ec" : undefined,
-        }}
         onClick={() => {
           if (video) {
             __select(video);
           }
         }}
-      ></div>
+        src={`/assets/editor/check${
+          selectList.indexOf(video) > -1 ? "active" : ""
+        }.svg`}
+        alt=""
+      />
       <img
         src="/assets/editor/video-cancel.svg"
         alt=""

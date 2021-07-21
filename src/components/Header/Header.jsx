@@ -28,15 +28,18 @@ const Wrapper = styled.div`
   }
   img {
     width: 102px;
+    cursor: pointer;
   }
 `;
 function Header() {
   return (
     <Wrapper>
-      <img src="/assets/logo.svg" alt="Aju" />
+      <Link to="/main">
+        <img src="/assets/logo.svg" alt="Aju" />
+      </Link>
       <div className="right">
         <Link to="/main">공사실적관리</Link>
-        <Link to="/">공지사항관리</Link>
+        <Link to="/notice">공지사항관리</Link>
       </div>
     </Wrapper>
   );

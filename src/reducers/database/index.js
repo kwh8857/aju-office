@@ -1,4 +1,5 @@
 const initialState = {
+  key: undefined,
   editor: [
     {
       type: "TITLE",
@@ -14,6 +15,12 @@ const initialState = {
 };
 const database = (state = initialState, { type, idx, payload, index }) => {
   switch (type) {
+    case "@layouts/INIT_KEY": {
+      return {
+        ...state,
+        key: payload,
+      };
+    }
     case "@layouts/INIT_DELETELIST": {
       let arr = state.deletelist;
       arr.push(payload);
@@ -23,6 +30,7 @@ const database = (state = initialState, { type, idx, payload, index }) => {
       };
     }
     case "@layouts/RESET": {
+      state.videolist = [];
       return {
         ...state,
         editor: initialState.editor,

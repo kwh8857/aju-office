@@ -123,6 +123,7 @@ function Summary({
   setFocus,
   id,
   focusIdx,
+  temKey,
 }) {
   const status = useSelector((state) => state.test.editor);
   const dispatch = useDispatch();
@@ -132,7 +133,7 @@ function Summary({
     (data64, name) => {
       return new Promise((resolve, reject) => {
         const data = data64.split(",")[1];
-        Fstorage.ref(`editor/${id}/${name}`)
+        Fstorage.ref(`editor/${temKey}/${id}/${name}`)
           .putString(data, "base64")
           .then((result) => {
             result.ref.getDownloadURL().then((downloadUrl) => {
@@ -141,7 +142,7 @@ function Summary({
           });
       });
     },
-    [id]
+    [id, temKey]
   );
   const __fileReader = useCallback((file) => {
     return new Promise((resolve, reject) => {

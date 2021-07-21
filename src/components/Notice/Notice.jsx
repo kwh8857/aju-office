@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import Header from "../Header/Header";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import Card from "./components/Card";
+import Card from "../Main/components/Card";
 
 const dummy = [
   {
@@ -181,24 +181,24 @@ const Body = styled.div`
   padding-top: 117px;
   box-sizing: border-box;
 `;
-function Main() {
+function Notice() {
   const history = useHistory();
   const __navMake = useCallback(() => {
-    history.push("/editor", { type: "new", category: "portfolio" });
+    history.push("/editor");
   }, [history]);
   return (
     <div>
       <Header />
       <Body>
         <Top>
-          <div className="title">공사실적 관리</div>
+          <div className="title">공지사항 관리</div>
           <div className="right">
             <div className="input-wrapper">
               <input type="text" placeholder="프로젝트명 검색" />
               <img src="/assets/grey-search.svg" alt="검색" />
             </div>
             <div className="btn" onClick={__navMake}>
-              공사실적 추가
+              공지사항 추가
             </div>
           </div>
         </Top>
@@ -214,4 +214,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default Notice;

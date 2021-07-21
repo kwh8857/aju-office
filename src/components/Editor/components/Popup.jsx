@@ -1,16 +1,16 @@
-import React, { useCallback } from 'react';
-import Link from './Link';
-import UploadFile from './UploadFile';
-import { useSelector } from 'react-redux';
-import Video from './Video';
-import Youtube from './Youtube';
+import React, { useCallback } from "react";
+import Link from "./Link";
+import UploadFile from "./UploadFile";
+import { useSelector } from "react-redux";
+import Video from "./Video";
+import Youtube from "./Youtube";
 
-function Popup({ isUp: { status, type }, setIsUp }) {
+function Popup({ isUp: { status, type }, setIsUp, temKey }) {
   const template = useSelector((state) => state.database.editor);
   const __close = useCallback(() => {
     setIsUp({
       status: false,
-      type: '',
+      type: "",
     });
   }, [setIsUp]);
   return status ? (
@@ -18,14 +18,14 @@ function Popup({ isUp: { status, type }, setIsUp }) {
       <div className="back-black" />
       <div
         className="popup-main"
-        style={type === 'VIDEO' ? { width: '663px' } : undefined}
+        style={type === "VIDEO" ? { width: "663px" } : undefined}
       >
-        {type === 'LINK' ? (
+        {type === "LINK" ? (
           <Link __close={__close} template={template} />
-        ) : type === 'FILE' ? (
-          <UploadFile __close={__close} template={template} />
-        ) : type === 'VIDEO' ? (
-          <Video __close={__close} template={template} />
+        ) : type === "FILE" ? (
+          <UploadFile __close={__close} template={template} temKey={temKey} />
+        ) : type === "VIDEO" ? (
+          <Video __close={__close} template={template} temKey={temKey} />
         ) : (
           <Youtube __close={__close} template={template} />
         )}

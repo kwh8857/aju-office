@@ -2,31 +2,34 @@ import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import firebaseApp from "../../../config/firebaseApp";
 const Fstorage = firebaseApp.storage();
-function UploadFile({ __close, template }) {
+function UploadFile({ __close, template, temKey }) {
   const dispatch = useDispatch();
   const [File, setFile] = useState(undefined);
-  const __uploadFile = useCallback((item) => {
-    return new Promise((resolve, reject) => {
-      Fstorage.ref(`/editor/files/${item.name}`)
-        .put(item)
-        .then((res) => {
-          res.ref.getDownloadURL().then((url) => {
-            resolve({
-              type: "FILE",
-              content: {
-                title: item.name,
-                url,
-              },
-              id: `file-${
-                new Date().getTime() -
-                Math.floor(Math.random() * (100 - 1 + 1)) +
-                1
-              }`,
+  const __uploadFile = useCallback(
+    (item) => {
+      return new Promise((resolve, reject) => {
+        Fstorage.ref(`/editor/${temKey}/files/${item.name}`)
+          .put(item)
+          .then((res) => {
+            res.ref.getDownloadURL().then((url) => {
+              resolve({
+                type: "FILE",
+                content: {
+                  title: item.name,
+                  url,
+                },
+                id: `file-${
+                  new Date().getTime() -
+                  Math.floor(Math.random() * (100 - 1 + 1)) +
+                  1
+                }`,
+              });
             });
           });
-        });
-    });
-  }, []);
+      });
+    },
+    [temKey]
+  );
   const __readFile = useCallback(() => {
     const arr = template.slice();
     let fileList = Object.values(File);
