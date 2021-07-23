@@ -12,7 +12,14 @@ function Navigation() {
         <Route path="/" exact component={Login} />
         <Route path="/main" exact component={Main} />
         <Route path="/notice" exact component={Notice} />
-        <Route path="/editor" exact component={Editor} />
+        <Route
+          path="/editor"
+          exact
+          component={Editor}
+          onLeave={() => {
+            console.log("떠남");
+          }}
+        />
       </Switch>
     </Router>
   );

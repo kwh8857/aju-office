@@ -6,13 +6,14 @@ import Popup from "./components/Popup";
 import Header from "../Header/Header";
 import firebaseApp from "../config/firebaseApp";
 import { useDispatch, useSelector } from "react-redux";
-import { Beforeunload, useBeforeunload } from "react-beforeunload";
+import { useBeforeunload } from "react-beforeunload";
+import { Prompt } from "react-router-dom";
 const Fstore = firebaseApp.firestore();
 function Editor({ location }) {
-  console.log();
   const dispatch = useDispatch();
   const temKey = useSelector((state) => state.database.key);
   const template = useSelector((state) => state.database.editor);
+
   const [isUp, setIsUp] = useState({
     status: false,
     type: "",
@@ -21,6 +22,7 @@ function Editor({ location }) {
     Fstore.collection("editor").doc(temKey).update({ template: template });
   }, [temKey, template]);
   useBeforeunload((e) => {
+    __updateData();
     e.preventDefault();
   });
 
@@ -41,12 +43,13 @@ function Editor({ location }) {
     return () => {};
   }, [dispatch, location]);
   return (
-    <Beforeunload
-      onBeforeunload={(e) => {
-        __updateData();
-        e.preventDefault();
-      }}
-    >
+    <>
+      <Prompt
+        message={() => {
+          __updateData();
+          return "템플릿을 저장하고 나가시겠습니까?";
+        }}
+      />
       <div className="editor">
         <Header />
         <div className="editor-wrapper">
@@ -55,7 +58,7 @@ function Editor({ location }) {
         </div>
         <Popup isUp={isUp} setIsUp={setIsUp} temKey={temKey} />
       </div>
-    </Beforeunload>
+    </>
   );
 }
 
