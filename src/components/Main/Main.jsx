@@ -186,6 +186,7 @@ function Main() {
   const __navMake = useCallback(() => {
     history.push("/editor", { type: "new", category: "portfolio" });
   }, [history]);
+
   return (
     <div>
       <Header />
