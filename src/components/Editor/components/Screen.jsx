@@ -53,7 +53,7 @@ function Screen({ temKey }) {
   );
   useEffect(() => {
     function deleteTem(event) {
-      if (event.key === "Backspace" && foucsIdx !== 0) {
+      if (event.key === "Backspace" && template.length > 1) {
         const arr = template.slice();
         let nowTemplate = arr[foucsIdx];
         if (nowTemplate.type !== "TITLE" && nowTemplate.type !== "SUMMARY") {
@@ -93,12 +93,6 @@ function Screen({ temKey }) {
       document.removeEventListener("keydown", deleteTem);
     };
   }, [foucsIdx, template, dispatch]);
-  useEffect(() => {
-    dispatch({
-      type: "@layouts/RESET",
-    });
-    return () => {};
-  }, [dispatch]);
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId="tags" direction="vertical">
@@ -203,4 +197,4 @@ function Screen({ temKey }) {
   );
 }
 
-export default Screen;
+export default React.memo(Screen);

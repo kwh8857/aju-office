@@ -1,31 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Header from "../Header/Header";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Card from "./components/Card";
+import firebaseApp from "../config/firebaseApp";
+import { Animation } from "../styles/Animation";
 
-const dummy = [
-  {
-    title: "화성그랜드파크",
-    sub: "",
-    timestamp: Date.now(),
-  },
-  {
-    title: "화성그랜드파크",
-    sub: "",
-    timestamp: Date.now(),
-  },
-  {
-    title: "화성그랜드파크",
-    sub: "",
-    timestamp: Date.now(),
-  },
-  {
-    title: "화성그랜드파크",
-    sub: "",
-    timestamp: Date.now(),
-  },
-];
 const List = styled.div`
   width: 100%;
   height: 100%;
@@ -183,36 +163,113 @@ const Body = styled.div`
 `;
 function Main() {
   const history = useHistory();
-  const __navMake = useCallback(() => {
-    history.push("/editor", { type: "new", category: "portfolio" });
-  }, [history]);
+  const [ListData, setListData] = useState([]);
+  const [DisplayList, setDisplayList] = useState([]);
 
+  const __navMake = useCallback(
+    (type, timestamp, id) => {
+      history.push("/editor", {
+        type,
+        category: "portfolio",
+        timestamp: timestamp ? timestamp : Date.now(),
+        id: id ? id : undefined,
+      });
+    },
+    [history]
+  );
+  const __getData = useCallback(async () => {
+    let arr = [];
+    await firebaseApp
+      .firestore()
+      .collection("editor")
+      .get()
+      .then((result) => {
+        if (result) {
+          result.forEach((item) => {
+            const value = item.data();
+            if (value.state === "portfolio") {
+              arr.push(Object.assign(value, { id: item.id }));
+            }
+          });
+        }
+      });
+    return arr.sort((a, b) => b.timestamp - a.timestamp);
+  }, []);
+  const __deleteCard = useCallback(
+    (id, file) => {
+      firebaseApp
+        .firestore()
+        .collection("editor")
+        .doc(id)
+        .delete()
+        .then(() => {
+          __getData().then((result) => {
+            setListData(result);
+            setDisplayList(result);
+          });
+        });
+    },
+    [__getData]
+  );
+  useMemo(
+    () =>
+      __getData().then((result) => {
+        setListData(result);
+        setDisplayList(result);
+      }),
+    [__getData]
+  );
   return (
     <div>
       <Header />
-      <Body>
-        <Top>
-          <div className="title">공사실적 관리</div>
-          <div className="right">
-            <div className="input-wrapper">
-              <input type="text" placeholder="프로젝트명 검색" />
-              <img src="/assets/grey-search.svg" alt="검색" />
+      <Animation>
+        <Body>
+          <Top>
+            <div className="title">공사실적 관리</div>
+            <div className="right">
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  placeholder="프로젝트명 검색"
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const filt = ListData.filter((item) =>
+                      item.title.includes(val)
+                    );
+                    setDisplayList(filt);
+                  }}
+                />
+                <img src="/assets/grey-search.svg" alt="검색" />
+              </div>
+              <div
+                className="btn"
+                onClick={() => {
+                  __navMake("new");
+                }}
+              >
+                공사실적 추가
+              </div>
             </div>
-            <div className="btn" onClick={__navMake}>
-              공사실적 추가
-            </div>
-          </div>
-        </Top>
-        <List>
-          {dummy.map(({ title, timestamp }, idx) => {
-            return (
-              <Card key={idx} title={title} timestamp={timestamp} index={idx} />
-            );
-          })}
-        </List>
-      </Body>
+          </Top>
+          <List>
+            {DisplayList.map(({ title, timestamp, id, template }, idx) => {
+              return (
+                <Card
+                  __delete={__deleteCard}
+                  navigation={__navMake}
+                  key={idx}
+                  id={id}
+                  title={title}
+                  timestamp={timestamp}
+                  template={template}
+                />
+              );
+            })}
+          </List>
+        </Body>
+      </Animation>
     </div>
   );
 }
 
-export default Main;
+export default React.memo(Main);

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import firebaseApp from "../../../config/firebaseApp";
+import firebaseApp from "../../config/firebaseApp";
 const Fstorage = firebaseApp.storage();
 function UploadFile({ __close, template, temKey }) {
   const dispatch = useDispatch();

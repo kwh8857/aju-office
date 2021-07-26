@@ -1,7 +1,6 @@
 import firebaseApp from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import "firebase/database";
 import "firebase/storage";
 import "firebase/performance";
 import "firebase/analytics";
@@ -10,7 +9,6 @@ import "firebase/analytics";
 const firebaseConfig = {
   apiKey: "AIzaSyB7m4H1jBYnMDERovliN6Kg2tLtCkgPBMg",
   authDomain: "steadee-pf.firebaseapp.com",
-  databaseURL: "https://steadee-pf-default-rtdb.firebaseio.com",
   projectId: "steadee-pf",
   storageBucket: "steadee-pf.appspot.com",
   messagingSenderId: "252193488049",

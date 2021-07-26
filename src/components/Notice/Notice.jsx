@@ -1,31 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Header from "../Header/Header";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Card from "../Main/components/Card";
+import { Animation } from "../styles/Animation";
+import firebaseApp from "../config/firebaseApp";
 
-const dummy = [
-  {
-    title: "화성그랜드파크",
-    sub: "",
-    timestamp: Date.now(),
-  },
-  {
-    title: "화성그랜드파크",
-    sub: "",
-    timestamp: Date.now(),
-  },
-  {
-    title: "화성그랜드파크",
-    sub: "",
-    timestamp: Date.now(),
-  },
-  {
-    title: "화성그랜드파크",
-    sub: "",
-    timestamp: Date.now(),
-  },
-];
 const List = styled.div`
   width: 100%;
   height: 100%;
@@ -181,35 +161,94 @@ const Body = styled.div`
   padding-top: 117px;
   box-sizing: border-box;
 `;
+const Fstore = firebaseApp.firestore();
 function Notice() {
   const history = useHistory();
-  const __navMake = useCallback(() => {
-    history.push("/editor");
-  }, [history]);
+  const [ListData, setListData] = useState([]);
+  const [DisplayList, setDisplayList] = useState([]);
+  const __navMake = useCallback(
+    (type, timestamp, id) => {
+      history.push("/editor", {
+        type,
+        category: "notice",
+        timestamp: timestamp ? timestamp : Date.now(),
+        id: id ? id : undefined,
+      });
+    },
+    [history]
+  );
+  const __getData = useCallback(async () => {
+    let arr = [];
+    await Fstore.collection("editor")
+      .get()
+      .then((result) => {
+        if (result) {
+          result.forEach((item) => {
+            const value = item.data();
+            if (value.state === "notice") {
+              arr.push(Object.assign(value, { id: item.id }));
+            }
+          });
+        }
+      });
+    return arr.sort((a, b) => b.timestamp - a.timestamp);
+  }, []);
+  useMemo(
+    () =>
+      __getData().then((result) => {
+        setListData(result);
+        setDisplayList(result);
+      }),
+    [__getData]
+  );
   return (
     <div>
       <Header />
-      <Body>
-        <Top>
-          <div className="title">공지사항 관리</div>
-          <div className="right">
-            <div className="input-wrapper">
-              <input type="text" placeholder="프로젝트명 검색" />
-              <img src="/assets/grey-search.svg" alt="검색" />
+      <Animation>
+        <Body>
+          <Top>
+            <div className="title">공지사항 관리</div>
+            <div className="right">
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  placeholder="프로젝트명 검색"
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const filt = ListData.filter((item) =>
+                      item.title.includes(val)
+                    );
+                    setDisplayList(filt);
+                  }}
+                />
+                <img src="/assets/grey-search.svg" alt="검색" />
+              </div>
+              <div
+                className="btn"
+                onClick={() => {
+                  __navMake("new");
+                }}
+              >
+                공지사항 추가
+              </div>
             </div>
-            <div className="btn" onClick={__navMake}>
-              공지사항 추가
-            </div>
-          </div>
-        </Top>
-        <List>
-          {dummy.map(({ title, timestamp }, idx) => {
-            return (
-              <Card key={idx} title={title} timestamp={timestamp} index={idx} />
-            );
-          })}
-        </List>
-      </Body>
+          </Top>
+          <List>
+            {DisplayList.map(({ title, timestamp, id }, idx) => {
+              return (
+                <Card
+                  navigation={__navMake}
+                  key={idx}
+                  id={id}
+                  title={title}
+                  timestamp={timestamp}
+                  index={idx}
+                />
+              );
+            })}
+          </List>
+        </Body>
+      </Animation>
     </div>
   );
 }

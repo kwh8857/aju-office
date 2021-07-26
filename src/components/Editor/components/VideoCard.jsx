@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from "react";
-import firebaseApp from "../../../config/firebaseApp";
+import firebaseApp from "../../config/firebaseApp";
 const Fstorage = firebaseApp.storage();
 function VideoCard({
   data,

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import firebaseApp from "../../../config/firebaseApp";
 import Resizer from "react-image-file-resizer";
+import firebaseApp from "../../config/firebaseApp";
 const dummy = [
   { img: "summary", type: "SUMMARY" },
   { img: "temp", type: "IMAGE" },

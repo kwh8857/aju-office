@@ -1,10 +1,10 @@
-import React, { useRef, useCallback, useEffect } from "react";
+import React, { useRef, useCallback, useEffect, useState } from "react";
 import TemplateEmty from "./TemplateEmty";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import firebaseApp from "../../../config/firebaseApp";
 import Resizer from "react-image-file-resizer";
+import firebaseApp from "../../../config/firebaseApp";
 const Fstorage = firebaseApp.storage();
 const Label = styled.div`
   width: 143px;
@@ -51,7 +51,6 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     label {
       position: relative;
       display: flex;
@@ -60,11 +59,7 @@ const Wrapper = styled.div`
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      cursor: pointer;
-      input {
-        position: absolute;
-        display: none;
-      }
+
       .true-image {
         width: 100%;
         height: 100%;
@@ -80,9 +75,6 @@ const Wrapper = styled.div`
       color: #bfbfbf;
       text-align: center;
       line-height: 1.57;
-    }
-    img {
-      width: 73px;
     }
   }
   .content {
@@ -128,7 +120,7 @@ function Summary({
   const status = useSelector((state) => state.test.editor);
   const dispatch = useDispatch();
   const contentRef = useRef(null);
-
+  const [nowIdx, setNowIdx] = useState(0);
   const __imageUpload = useCallback(
     (data64, name) => {
       return new Promise((resolve, reject) => {
@@ -217,21 +209,10 @@ function Summary({
         <Wrapper>
           <div className="main">
             <label>
-              {images[0] ? (
-                <img className="true-image" src={images[0].img} alt="" />
+              {images[nowIdx] ? (
+                <img className="true-image" src={images[nowIdx].img} alt="" />
               ) : undefined}
-              <img
-                className="main-img"
-                src="/assets/editor/grey-plus.png"
-                alt="추가"
-              />
-              <input
-                type="file"
-                accept="image/x-png,image/gif,image/jpeg"
-                onChange={(e) => {
-                  __updateImage("main", e.target.files[0]);
-                }}
-              />
+
               <div className="sub">
                 사진을 업로드해주세요 <br /> jpeg, png, gif
               </div>
@@ -301,7 +282,38 @@ function Summary({
               }}
             ></p>
             <div className="list">
-              <Label>
+              <Label
+                onMouseOver={() => {
+                  if (images[0]) {
+                    setNowIdx(0);
+                  }
+                }}
+              >
+                <label>
+                  {images[0] ? (
+                    <img className="sub-image" src={images[0].img} alt="" />
+                  ) : undefined}
+                  <img
+                    className="list-img"
+                    src="/assets/editor/grey-plus.png"
+                    alt="추가"
+                  />
+                  <input
+                    type="file"
+                    accept="image/x-png,image/gif,image/jpeg"
+                    onChange={(e) => {
+                      __updateImage(0, e.target.files[0]);
+                    }}
+                  />
+                </label>
+              </Label>
+              <Label
+                onMouseOver={() => {
+                  if (images[1]) {
+                    setNowIdx(1);
+                  }
+                }}
+              >
                 <label>
                   {images[1] ? (
                     <img className="sub-image" src={images[1].img} alt="" />
@@ -320,7 +332,13 @@ function Summary({
                   />
                 </label>
               </Label>
-              <Label>
+              <Label
+                onMouseOver={() => {
+                  if (images[2]) {
+                    setNowIdx(2);
+                  }
+                }}
+              >
                 <label>
                   {images[2] ? (
                     <img className="sub-image" src={images[2].img} alt="" />
@@ -335,25 +353,6 @@ function Summary({
                     accept="image/x-png,image/gif,image/jpeg"
                     onChange={(e) => {
                       __updateImage(2, e.target.files[0]);
-                    }}
-                  />
-                </label>
-              </Label>
-              <Label>
-                <label>
-                  {images[3] ? (
-                    <img className="sub-image" src={images[3].img} alt="" />
-                  ) : undefined}
-                  <img
-                    className="list-img"
-                    src="/assets/editor/grey-plus.png"
-                    alt="추가"
-                  />
-                  <input
-                    type="file"
-                    accept="image/x-png,image/gif,image/jpeg"
-                    onChange={(e) => {
-                      __updateImage(3, e.target.files[0]);
                     }}
                   />
                 </label>
