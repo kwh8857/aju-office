@@ -55,16 +55,16 @@ function Editor({ location }) {
         .then((res) => {
           const list = res.data().storageList;
           if (list) {
-            const filt = template.filter(({ content, type }, idx) => {
-              console.log(list.indexOf(content.url));
-              console.log(type);
-              //이부분 수정중
-              if (type === "IMAGE" && list.indexOf(content.url) < 0) {
-                return true;
-              } else {
-                return false;
+            const imageMap = new Map();
+            template.forEach(({ type, content: { resize, url } }, idx) => {
+              if (type === "IMAGE") {
+                imageMap.set(resize, true);
+                imageMap.set(url, true);
               }
             });
+            const changeOb = Object.fromEntries(imageMap);
+            const filt = list.filter((item) => !changeOb[item]);
+
             console.log(filt);
           }
           res.ref.update({ template: template, title, sub }).then(() => {
