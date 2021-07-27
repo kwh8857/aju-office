@@ -23,13 +23,17 @@ function Card({ title, timestamp, navigation, id, template, __delete }) {
       }
       if (type === "SUMMARY") {
         const { images } = content;
-        images.forEach((item) => {
-          Fstorage.refFromURL(item).delete();
+        images.forEach(({ resize, img }) => {
+          console.log(img);
+          console.log(resize);
+          Fstorage.refFromURL(resize).delete();
+          Fstorage.refFromURL(img).delete();
         });
       }
     });
-    console.log(filt);
-  }, [template, id]);
+    setIsDelete(false);
+    __delete(id);
+  }, [template, id, __delete]);
   return (
     <div className="card">
       <div className="left">

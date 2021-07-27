@@ -12,7 +12,7 @@ const dummy = [
 ];
 
 const Fstorage = firebaseApp.storage();
-
+const Fstore = firebaseApp.firestore();
 function Insert({ setIsUp, temKey }) {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.database.editor);
@@ -29,6 +29,22 @@ function Insert({ setIsUp, temKey }) {
                 .putString(redata, "base64")
                 .then((result) => {
                   result.ref.getDownloadURL().then((resizeUrl) => {
+                    Fstore.collection("editor")
+                      .doc(temKey)
+                      .update({
+                        storageList:
+                          firebaseApp.firestore.FieldValue.arrayUnion(
+                            downloadUrl
+                          ),
+                      });
+                    Fstore.collection("editor")
+                      .doc(temKey)
+                      .update({
+                        storageList:
+                          firebaseApp.firestore.FieldValue.arrayUnion(
+                            resizeUrl
+                          ),
+                      });
                     resolve({ url: downloadUrl, resize: resizeUrl });
                   });
                 });

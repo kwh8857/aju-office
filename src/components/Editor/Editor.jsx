@@ -6,7 +6,7 @@ import Popup from "./components/Popup";
 import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { Beforeunload } from "react-beforeunload";
-import { Prompt } from "react-router-dom";
+import { Prompt, useHistory } from "react-router-dom";
 import firebaseApp from "../config/firebaseApp";
 import TitleSection from "./components/TitleSection";
 import { Animation } from "../styles/Animation";
@@ -14,11 +14,17 @@ const Fstore = firebaseApp.firestore();
 
 function Editor({ location }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const temKey = useSelector((state) => state.database.key);
   const template = useSelector((state) => state.database.editor);
 
   function reducer(state, action) {
     switch (action.type) {
+      case "RESET":
+        return {
+          title: undefined,
+          sub: undefined,
+        };
       case "INIT":
         return action.info;
       case "TITLE":
@@ -38,12 +44,39 @@ function Editor({ location }) {
     status: false,
     type: "",
   });
-  const __updateData = useCallback(() => {
-    const { title, sub } = info;
-    Fstore.collection("editor")
-      .doc(temKey)
-      .update({ template: template, title, sub });
-  }, [temKey, template, info]);
+  const [isExit, setIsExit] = useState(false);
+  const __updateData = useCallback(
+    (path) => {
+      const { title, sub } = info;
+
+      Fstore.collection("editor")
+        .doc(temKey)
+        .get()
+        .then((res) => {
+          const list = res.data().storageList;
+          if (list) {
+            const filt = template.filter(({ content, type }, idx) => {
+              console.log(list.indexOf(content.url));
+              console.log(type);
+              //이부분 수정중
+              if (type === "IMAGE" && list.indexOf(content.url) < 0) {
+                return true;
+              } else {
+                return false;
+              }
+            });
+            console.log(filt);
+          }
+          res.ref.update({ template: template, title, sub }).then(() => {
+            setIsExit(true);
+            if (path) {
+              history.push(path);
+            }
+          });
+        });
+    },
+    [temKey, template, info, history]
+  );
 
   useEffect(() => {
     const { type, timestamp, category, id } = location.state;
@@ -54,9 +87,15 @@ function Editor({ location }) {
           state: category,
         })
         .then((res) => {
+          patch({
+            type: "RESET",
+          });
           dispatch({
             type: "@layouts/INIT_KEY",
             payload: res.id,
+          });
+          dispatch({
+            type: "@layouts/RESET",
           });
         })
         .catch((err) => {
@@ -93,9 +132,13 @@ function Editor({ location }) {
       }}
     >
       <Prompt
-        message={() => {
-          __updateData();
-          return "템플릿을 저장하고 나가시겠습니까?";
+        message={(e) => {
+          if (!isExit) {
+            __updateData(e.pathname);
+            return false;
+          } else {
+            return true;
+          }
         }}
       />
       <Animation>
