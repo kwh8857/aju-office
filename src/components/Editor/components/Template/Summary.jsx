@@ -149,8 +149,8 @@ function Summary({
         const imageUrl = e.target.result;
         Resizer.imageFileResizer(
           file,
-          100,
-          100,
+          5,
+          5,
           "PNG",
           100,
           0,

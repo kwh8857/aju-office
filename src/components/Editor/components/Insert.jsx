@@ -45,8 +45,8 @@ function Insert({ setIsUp, temKey }) {
         const imageUrl = e.target.result;
         Resizer.imageFileResizer(
           file,
-          50,
-          50,
+          5,
+          5,
           "JPEG",
           100,
           0,
