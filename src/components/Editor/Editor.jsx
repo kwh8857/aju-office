@@ -61,7 +61,7 @@ function Editor({ location }) {
               mainfilt.length > 0
                 ? mainfilt[0].content
                 : {
-                    reszie:
+                    resize:
                       "https://firebasestorage.googleapis.com/v0/b/steadee-pf.appspot.com/o/editor%2Fbasic%2Fbasic-reszie.jpeg?alt=media&token=42033a61-6b83-4627-990d-9dc0c713a152",
                     url: "https://firebasestorage.googleapis.com/v0/b/steadee-pf.appspot.com/o/editor%2Fbasic%2Fbasic.jpeg?alt=media&token=62440937-0aed-4387-8199-fa5c1c572b48",
                   },
