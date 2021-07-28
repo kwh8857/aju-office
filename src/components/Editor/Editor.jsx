@@ -54,7 +54,7 @@ function Editor({ location }) {
           .doc(temKey)
           .update({
             template: template,
-            title: title ? title : "임시저장 게시물",
+            title: title ? title : "임시저장",
             sub: sub ? sub : "",
           })
           .then(() => {
@@ -69,7 +69,7 @@ function Editor({ location }) {
           .doc(temKey)
           .update({
             template: template,
-            title: title ? title : "임시저장 게시물",
+            title: title ? title : "임시저장",
           })
           .then(() => {
             setIsExit(true);
