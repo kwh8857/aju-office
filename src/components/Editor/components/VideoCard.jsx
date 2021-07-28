@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState } from "react";
 import firebaseApp from "../../config/firebaseApp";
+
 const Fstorage = firebaseApp.storage();
 function VideoCard({
   data,
@@ -16,12 +17,13 @@ function VideoCard({
   const [uploadstate, setUploadstate] = useState(undefined);
   const [thumbnail, setthumbnail] = useState(undefined);
   const [percent, setpercent] = useState(0);
+
   const __deleteVideo = useCallback(() => {
     if (video) {
-      Fstorage.refFromURL(thumbnail)
+      Fstorage.refFromURL(video)
         .delete()
         .then(() => {
-          Fstorage.refFromURL(video)
+          Fstorage.refFromURL(thumbnail)
             .delete()
             .then(() => {
               __delete(idx);
@@ -39,10 +41,12 @@ function VideoCard({
   }, [video, __delete, idx, uploadstate, thumbnail]);
   const __uploadVideo = useCallback(
     (thumbnail) => {
-      const update = Fstorage.ref(`editor/video/${data.name}/video`).put(data);
+      const update = Fstorage.ref(`editor/${temKey}/${data.name}/video`).put(
+        data
+      );
       __upload(idx, update, data.name, thumbnail);
     },
-    [data, __upload, idx]
+    [data, __upload, idx, temKey]
   );
   const __withdrawThumbnail = useCallback(() => {
     return new Promise((resolve, reject) => {

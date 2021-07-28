@@ -38,12 +38,13 @@ const Label = styled.div`
 `;
 const Wrapper = styled.div`
   width: 100%;
-  height: 550px;
+  height: 490px;
   display: flex;
-  border-bottom: solid 1px #dbdbdb;
+  position: relative;
+  z-index: 10;
   .main {
     border: solid 1px #dbdbdb;
-    margin-right: 35px;
+    margin-right: 12px;
     width: 503px;
     height: 490px;
     background-color: #f7f7f7;
@@ -81,9 +82,6 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-bottom: 60px;
-
-    box-sizing: border-box;
     p {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -105,6 +103,14 @@ const Wrapper = styled.div`
       margin-top: 25px;
     }
   }
+`;
+const ControlBox = styled.div`
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 `;
 
 function Summary({
@@ -183,24 +189,24 @@ function Summary({
     [__fileReader, __imageUpload, dispatch, idx]
   );
   useEffect(() => {
-    if (text && focusIdx !== idx) {
-      contentRef.current.innerHTML = text;
-    }
+    contentRef.current.innerHTML = text;
     return () => {};
-  }, [text, focusIdx, idx]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <>
       {idx === 0 ? <TemplateEmty idx={idx} /> : undefined}
       <div
-        className="template-video"
+        className={`template-video ${focusIdx === idx ? "focus" : ""}`}
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
-        onClick={() => {
-          setFocus(idx);
-        }}
       >
-        <div className="dnd-icon" style={{ right: "-60px" }}>
+        <ControlBox
+          onClick={() => {
+            setFocus(idx);
+          }}
+        />
+        <div className="dnd-icon">
           <img
             src="/assets/projects/dnd-icon.svg"
             alt="원하는 위치로 이동해보세요!"
@@ -302,6 +308,7 @@ function Summary({
                     type="file"
                     accept="image/x-png,image/gif,image/jpeg"
                     onChange={(e) => {
+                      setFocus(undefined);
                       __updateImage(0, e.target.files[0]);
                     }}
                   />
@@ -327,6 +334,7 @@ function Summary({
                     type="file"
                     accept="image/x-png,image/gif,image/jpeg"
                     onChange={(e) => {
+                      setFocus(undefined);
                       __updateImage(1, e.target.files[0]);
                     }}
                   />
@@ -352,6 +360,7 @@ function Summary({
                     type="file"
                     accept="image/x-png,image/gif,image/jpeg"
                     onChange={(e) => {
+                      setFocus(undefined);
                       __updateImage(2, e.target.files[0]);
                     }}
                   />

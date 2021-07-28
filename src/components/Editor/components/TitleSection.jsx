@@ -17,7 +17,6 @@ const Wrapper = styled.div`
       width: 148px;
       height: 50px;
       cursor: pointer;
-      background-color: #a50006;
       border-radius: 5px;
       color: white;
       font-size: 19px;
@@ -55,7 +54,6 @@ const Wrapper = styled.div`
 
 function TitleSection({ category, dispatch, info: { title, sub } }) {
   const history = useHistory();
-
   return (
     <Wrapper>
       <div className="top">
@@ -64,8 +62,23 @@ function TitleSection({ category, dispatch, info: { title, sub } }) {
         </div>
         <div
           className="btn"
+          style={{
+            backgroundColor:
+              category === "notice"
+                ? title
+                  ? "#a50006"
+                  : "#7c7c7c"
+                : title && sub
+                ? "#a50006"
+                : "#7c7c7c",
+          }}
           onClick={() => {
-            history.goBack();
+            if (category !== "notice" && title && sub) {
+              history.goBack();
+            }
+            if (category === "notice" && title) {
+              history.goBack();
+            }
           }}
         >
           등록
@@ -79,30 +92,48 @@ function TitleSection({ category, dispatch, info: { title, sub } }) {
         maxLength={60}
         placeholder="게시글 제목을 입력해주세요"
         onChange={(e) => {
-          dispatch({
-            type: "TITLE",
-            title: e.target.value,
-          });
+          if (e.target.value) {
+            dispatch({
+              type: "TITLE",
+              title: e.target.value,
+            });
+          } else {
+            dispatch({
+              type: "TITLE",
+              title: undefined,
+            });
+          }
         }}
       />
 
-      <div className="ti">개요</div>
-      <textarea
-        type="text"
-        maxLength={120}
-        value={sub ? sub : ""}
-        placeholder="개요는 최대 2줄까지 입력해주세요"
-        onChange={(e) => {
-          const line = e.target.value.split(/\n/g);
-          line.splice(2);
-          let test = line.join();
-          let result = test.replace(/,/g, "\n");
-          dispatch({
-            type: "SUB",
-            sub: result,
-          });
-        }}
-      />
+      {category !== "notice" ? (
+        <>
+          <div className="ti">개요</div>
+          <textarea
+            type="text"
+            maxLength={120}
+            value={sub ? sub : ""}
+            placeholder="개요는 최대 2줄까지 입력해주세요"
+            onChange={(e) => {
+              const line = e.target.value.split(/\n/g);
+              line.splice(2);
+              let test = line.join();
+              let result = test.replace(/,/g, "\n");
+              if (result) {
+                dispatch({
+                  type: "SUB",
+                  sub: result,
+                });
+              } else {
+                dispatch({
+                  type: "SUB",
+                  sub: undefined,
+                });
+              }
+            }}
+          />
+        </>
+      ) : undefined}
     </Wrapper>
   );
 }

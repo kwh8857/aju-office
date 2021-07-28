@@ -15,7 +15,7 @@ import TemplateVideo from "./Template/TemplateVideo";
 import Summary from "./Template/Summary";
 resetServerContext();
 
-function Screen({ temKey }) {
+function Screen({ temKey, Fstore, Fstorage }) {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.database.editor);
   const [foucsIdx, setFoucsIdx] = useState(0);
@@ -53,38 +53,45 @@ function Screen({ temKey }) {
   );
   useEffect(() => {
     function deleteTem(event) {
-      if (event.key === "Backspace" && template.length > 1) {
+      if (event.key === "Backspace" && template.length > 1 && foucsIdx > -1) {
         const arr = template.slice();
         let nowTemplate = arr[foucsIdx];
-        if (nowTemplate.type !== "TITLE" && nowTemplate.type !== "SUMMARY") {
+        if (nowTemplate.type !== "TITLE") {
           setFoucsIdx(-1);
 
-          if (
-            nowTemplate.type === "IMAGE" ||
-            nowTemplate.type === "VIDEO" ||
-            nowTemplate.type === "FILE"
-          ) {
-            dispatch({
-              type: "@layouts/INIT_DELETELIST",
-              payload:
-                nowTemplate.type === "IMAGE" || nowTemplate.type === "VIDEO"
-                  ? nowTemplate.content
-                  : nowTemplate.content.url,
+          if (nowTemplate.type === "IMAGE") {
+            const { resize, url } = nowTemplate.content;
+            Fstorage.refFromURL(resize).delete();
+            Fstorage.refFromURL(url).delete();
+          }
+          if (nowTemplate.type === "VIDEO") {
+            Fstorage.refFromURL(nowTemplate.content).delete();
+          }
+          if (nowTemplate.type === "SUMMARY") {
+            nowTemplate.content.images.forEach(({ resize, img }) => {
+              Fstorage.refFromURL(resize).delete();
+              Fstorage.refFromURL(img).delete();
             });
           }
-
           arr.splice(foucsIdx, 1);
+          Fstore.collection("editor").doc(temKey).update({ template: arr });
           dispatch({
             type: "@layouts/CHANGE_EDITOR",
             payload: arr,
           });
-        } else if (foucsIdx !== 0 && nowTemplate.content.length === 0) {
+        } else {
+          arr.splice(foucsIdx, 1);
+          if (
+            nowTemplate.type === "TITLE" &&
+            foucsIdx !== 0 &&
+            nowTemplate.content.length === 0
+          ) {
+            dispatch({
+              type: "@layouts/CHANGE_EDITOR",
+              payload: arr,
+            });
+          }
           setFoucsIdx(-1);
-          arr.splice(foucsIdx, 1);
-          dispatch({
-            type: "@layouts/CHANGE_EDITOR",
-            payload: arr,
-          });
         }
       }
     }
@@ -92,7 +99,7 @@ function Screen({ temKey }) {
     return () => {
       document.removeEventListener("keydown", deleteTem);
     };
-  }, [foucsIdx, template, dispatch]);
+  }, [foucsIdx, template, dispatch, temKey, Fstore, Fstorage]);
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId="tags" direction="vertical">

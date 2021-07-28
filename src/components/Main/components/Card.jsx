@@ -6,31 +6,33 @@ const Fstorage = firebaseApp.storage();
 function Card({ title, timestamp, navigation, id, template, __delete }) {
   const [isDelete, setIsDelete] = useState(false);
   const deleteFile = useCallback(async () => {
-    const filt = template.filter(
-      (item) =>
-        item.type === "IMAGE" ||
-        item.type === "VIDEO" ||
-        item.type === "SUMMARY"
-    );
-    await filt.forEach(({ content, type }) => {
-      if (type === "IMAGE") {
-        const { resize, url } = content;
-        Fstorage.refFromURL(resize).delete();
-        Fstorage.refFromURL(url).delete();
-      }
-      if (type === "VIDEO") {
-        Fstorage.refFromURL(content).delete();
-      }
-      if (type === "SUMMARY") {
-        const { images } = content;
-        images.forEach(({ resize, img }) => {
-          console.log(img);
-          console.log(resize);
+    if (template) {
+      const filt = template.filter(
+        (item) =>
+          item.type === "IMAGE" ||
+          item.type === "VIDEO" ||
+          item.type === "SUMMARY"
+      );
+      await filt.forEach(({ content, type }) => {
+        if (type === "IMAGE") {
+          const { resize, url } = content;
           Fstorage.refFromURL(resize).delete();
-          Fstorage.refFromURL(img).delete();
-        });
-      }
-    });
+          Fstorage.refFromURL(url).delete();
+        }
+        if (type === "VIDEO") {
+          Fstorage.refFromURL(content).delete();
+        }
+        if (type === "SUMMARY") {
+          const { images } = content;
+          images.forEach(({ resize, img }) => {
+            console.log(img);
+            console.log(resize);
+            Fstorage.refFromURL(resize).delete();
+            Fstorage.refFromURL(img).delete();
+          });
+        }
+      });
+    }
     setIsDelete(false);
     __delete(id);
   }, [template, id, __delete]);

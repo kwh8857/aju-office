@@ -258,19 +258,26 @@ $gray3: #dbdbdb;
           height: 100%;
           position: relative;
           cursor: default;
+ padding: 70px 17px 22px 17px;
+          box-sizing: border-box;
+          border: solid 1px #dbdbdb;
+          border-radius: 5px;
 
           .dnd-icon {
             width: 50px;
             z-index: 1000;
             position: absolute;
             right: 0;
-            top: 0;
+            top: 3px;
             cursor: grab;
           }
 
           &>video {
             width: 100%;
           }
+        }
+        .focus{
+          border: solid 1px #3597ec;
         }
 
         .template-youtube {

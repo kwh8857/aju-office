@@ -1,6 +1,9 @@
 import React, { useState, useCallback } from "react";
 import VideoCard from "./VideoCard";
 import { useDispatch, useSelector } from "react-redux";
+import firebaseApp from "../../config/firebaseApp";
+
+const Fstore = firebaseApp.firestore();
 
 function Video({ __close, template, temKey }) {
   const dispatch = useDispatch();
@@ -11,12 +14,15 @@ function Video({ __close, template, temKey }) {
     (idx) => {
       const arr = List.slice();
       arr.splice(idx, 1);
+      Fstore.collection("editor").doc(temKey).update({
+        videoList: arr,
+      });
       dispatch({
         type: "@layouts/INIT_VIDEO",
         payload: arr,
       });
     },
-    [List, dispatch]
+    [List, dispatch, temKey]
   );
   const __updateTemplate = useCallback(() => {
     let arr = template.slice();
@@ -64,6 +70,15 @@ function Video({ __close, template, temKey }) {
   );
   const __updateList = useCallback(
     (idx, url, name, thumbnail) => {
+      Fstore.collection("editor")
+        .doc(temKey)
+        .update({
+          videoList: firebaseApp.firestore.FieldValue.arrayUnion({
+            url,
+            name,
+            thumbnail,
+          }),
+        });
       dispatch({
         type: "@layouts/UPDATE_VIDEO",
         payload: {
@@ -74,7 +89,7 @@ function Video({ __close, template, temKey }) {
         idx,
       });
     },
-    [dispatch]
+    [dispatch, temKey]
   );
   const __uploadVideo = useCallback(
     (e) => {

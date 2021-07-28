@@ -11,10 +11,11 @@ import firebaseApp from "../config/firebaseApp";
 import TitleSection from "./components/TitleSection";
 import { Animation } from "../styles/Animation";
 const Fstore = firebaseApp.firestore();
-
+const Fstorage = firebaseApp.storage();
 function Editor({ location }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { type, timestamp, category, id } = location.state;
   const temKey = useSelector((state) => state.database.key);
   const template = useSelector((state) => state.database.editor);
 
@@ -47,39 +48,41 @@ function Editor({ location }) {
   const [isExit, setIsExit] = useState(false);
   const __updateData = useCallback(
     (path) => {
-      const { title, sub } = info;
-
-      Fstore.collection("editor")
-        .doc(temKey)
-        .get()
-        .then((res) => {
-          const list = res.data().storageList;
-          if (list) {
-            const imageMap = new Map();
-            template.forEach(({ type, content: { resize, url } }, idx) => {
-              if (type === "IMAGE") {
-                imageMap.set(resize, true);
-                imageMap.set(url, true);
-              }
-            });
-            const changeOb = Object.fromEntries(imageMap);
-            const filt = list.filter((item) => !changeOb[item]);
-
-            console.log(filt);
-          }
-          res.ref.update({ template: template, title, sub }).then(() => {
+      if (category === "portfolio") {
+        const { title, sub } = info;
+        Fstore.collection("editor")
+          .doc(temKey)
+          .update({
+            template: template,
+            title: title ? title : "임시저장 게시물",
+            sub: sub ? sub : "",
+          })
+          .then(() => {
             setIsExit(true);
             if (path) {
               history.push(path);
             }
           });
-        });
+      } else {
+        const { title } = info;
+        Fstore.collection("editor")
+          .doc(temKey)
+          .update({
+            template: template,
+            title: title ? title : "임시저장 게시물",
+          })
+          .then(() => {
+            setIsExit(true);
+            if (path) {
+              history.push(path);
+            }
+          });
+      }
     },
-    [temKey, template, info, history]
+    [temKey, template, info, history, category]
   );
 
   useEffect(() => {
-    const { type, timestamp, category, id } = location.state;
     if (type === "new") {
       Fstore.collection("editor")
         .add({
@@ -107,10 +110,25 @@ function Editor({ location }) {
         .get()
         .then((result) => {
           const value = result.data();
+
           patch({
             type: "INIT",
-            info: { title: value.title, sub: value.sub },
+            info: {
+              title: value.title,
+              sub: category !== "notice" ? value.sub : undefined,
+            },
           });
+          if (value.videoList) {
+            dispatch({
+              type: "@layouts/INIT_VIDEO",
+              payload: value.videoList,
+            });
+          } else {
+            dispatch({
+              type: "@layouts/INIT_VIDEO",
+              payload: [],
+            });
+          }
           dispatch({
             type: "@layouts/CHANGE_EDITOR",
             payload: value.template,
@@ -122,7 +140,7 @@ function Editor({ location }) {
       });
     }
     return () => {};
-  }, [dispatch, location]);
+  }, [dispatch, category, id, type, timestamp]);
 
   return (
     <Beforeunload
@@ -144,14 +162,10 @@ function Editor({ location }) {
       <Animation>
         <div className="editor">
           <Header />
-          <TitleSection
-            category={location.state.category}
-            dispatch={patch}
-            info={info}
-          />
+          <TitleSection category={category} dispatch={patch} info={info} />
           <div className="editor-wrapper">
-            <EdiHeader setIsUp={setIsUp} temKey={temKey} />
-            <Screen temKey={temKey} />
+            <EdiHeader setIsUp={setIsUp} temKey={temKey} category={category} />
+            <Screen temKey={temKey} Fstore={Fstore} Fstorage={Fstorage} />
           </div>
           <Popup isUp={isUp} setIsUp={setIsUp} temKey={temKey} />
         </div>

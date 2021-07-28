@@ -327,6 +327,11 @@
   height: 100%;
   position: relative;
   cursor: default;
+  padding: 70px 17px 22px 17px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: solid 1px #dbdbdb;
+  border-radius: 5px;
 }
 
 #root .editor .editor-wrapper .editor-screen .template-video .dnd-icon {
@@ -334,13 +339,17 @@
   z-index: 1000;
   position: absolute;
   right: 0;
-  top: 0;
+  top: 3px;
   cursor: -webkit-grab;
   cursor: grab;
 }
 
 #root .editor .editor-wrapper .editor-screen .template-video > video {
   width: 100%;
+}
+
+#root .editor .editor-wrapper .editor-screen .focus {
+  border: solid 1px #3597ec;
 }
 
 #root .editor .editor-wrapper .editor-screen .template-youtube {

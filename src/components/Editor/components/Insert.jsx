@@ -29,22 +29,6 @@ function Insert({ setIsUp, temKey }) {
                 .putString(redata, "base64")
                 .then((result) => {
                   result.ref.getDownloadURL().then((resizeUrl) => {
-                    Fstore.collection("editor")
-                      .doc(temKey)
-                      .update({
-                        storageList:
-                          firebaseApp.firestore.FieldValue.arrayUnion(
-                            downloadUrl
-                          ),
-                      });
-                    Fstore.collection("editor")
-                      .doc(temKey)
-                      .update({
-                        storageList:
-                          firebaseApp.firestore.FieldValue.arrayUnion(
-                            resizeUrl
-                          ),
-                      });
                     resolve({ url: downloadUrl, resize: resizeUrl });
                   });
                 });
@@ -104,6 +88,9 @@ function Insert({ setIsUp, temKey }) {
           })
         ).then((result) => {
           const arr = template.slice();
+          Fstore.collection("/editor")
+            .doc(temKey)
+            .update({ template: [...arr, ...result] });
           dispatch({
             type: "@layouts/CHANGE_EDITOR",
             payload: [...arr, ...result],
@@ -111,7 +98,7 @@ function Insert({ setIsUp, temKey }) {
         });
       });
     },
-    [__imageUpload, __fileReader, template, dispatch]
+    [__imageUpload, __fileReader, template, dispatch, temKey]
   );
   return (
     <div className="insert-wrapper">
