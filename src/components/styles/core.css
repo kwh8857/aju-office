@@ -7,6 +7,15 @@
   -webkit-font-smoothing: antialiased;
 }
 
+* [contenteditable=true]:empty:before {
+  content: attr(placeholder);
+  display: block;
+  /* For Firefox */
+  color: #bfbfbf;
+  font-size: 17px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 html,
 body {
   width: 100%;

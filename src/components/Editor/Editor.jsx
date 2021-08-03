@@ -10,6 +10,7 @@ import { Prompt, useHistory } from "react-router-dom";
 import firebaseApp from "../config/firebaseApp";
 import TitleSection from "./components/TitleSection";
 import { Animation } from "../styles/Animation";
+import Loading from "./components/Loading";
 const Fstore = firebaseApp.firestore();
 const Fstorage = firebaseApp.storage();
 function Editor({ location }) {
@@ -106,9 +107,6 @@ function Editor({ location }) {
             type: "@layouts/INIT_KEY",
             payload: res.id,
           });
-          dispatch({
-            type: "@layouts/RESET",
-          });
         })
         .catch((err) => {
           console.log(err);
@@ -150,7 +148,13 @@ function Editor({ location }) {
     }
     return () => {};
   }, [dispatch, category, id, type, timestamp]);
-
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: "@layouts/RESET",
+      });
+    };
+  }, [dispatch]);
   return (
     <Beforeunload
       onBeforeunload={(e) => {
@@ -179,6 +183,7 @@ function Editor({ location }) {
           <Popup isUp={isUp} setIsUp={setIsUp} temKey={temKey} />
         </div>
       </Animation>
+      <Loading />
     </Beforeunload>
   );
 }

@@ -33,7 +33,17 @@ const database = (state = initialState, { type, idx, payload, index }) => {
       state.videolist = [];
       return {
         ...state,
-        editor: initialState.editor,
+        editor: [
+          {
+            type: "TITLE",
+            content: "",
+            id: `title-${
+              new Date().getTime() -
+              Math.floor(Math.random() * (100 - 1 + 1)) +
+              1
+            }`,
+          },
+        ],
       };
     }
     case "@layouts/UPDATE_VIDEO": {

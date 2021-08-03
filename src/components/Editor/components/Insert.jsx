@@ -61,6 +61,10 @@ function Insert({ setIsUp, temKey }) {
   }, []);
   const __imageUpdate = useCallback(
     (e) => {
+      dispatch({
+        type: "@config/isLoading",
+        payload: true,
+      });
       let fileList = Object.values(e.target.files);
       const base64 = Promise.all(
         fileList.map((item) => {
@@ -94,6 +98,10 @@ function Insert({ setIsUp, temKey }) {
           dispatch({
             type: "@layouts/CHANGE_EDITOR",
             payload: [...arr, ...result],
+          });
+          dispatch({
+            type: "@config/isLoading",
+            payload: false,
           });
         });
       });

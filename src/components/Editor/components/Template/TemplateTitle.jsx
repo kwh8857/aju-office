@@ -6,6 +6,7 @@ function TemplateTitle({ data, idx, provided, setFocus }) {
   const dispatch = useDispatch();
   const status = useSelector((state) => state.test.editor);
   useEffect(() => {
+    console.log(data);
     contentRef.current.innerHTML = data;
     return () => {};
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -25,6 +26,7 @@ function TemplateTitle({ data, idx, provided, setFocus }) {
       </div>
       <div className="con-wrapper">
         <p
+          placeholder="내용을 입력해주세요"
           id="text-line"
           contentEditable={true}
           ref={contentRef}

@@ -226,6 +226,7 @@ function Summary({
           </div>
           <div className="content">
             <p
+              placeholder="내용을 입력해주세요"
               contentEditable={true}
               ref={contentRef}
               suppressContentEditableWarning={true}
@@ -309,7 +310,9 @@ function Summary({
                     accept="image/x-png,image/gif,image/jpeg"
                     onChange={(e) => {
                       setFocus(undefined);
-                      __updateImage(0, e.target.files[0]);
+                      if (e.target.files) {
+                        __updateImage(0, e.target.files[0]);
+                      }
                     }}
                   />
                 </label>
@@ -335,7 +338,9 @@ function Summary({
                     accept="image/x-png,image/gif,image/jpeg"
                     onChange={(e) => {
                       setFocus(undefined);
-                      __updateImage(1, e.target.files[0]);
+                      if (e.target.files) {
+                        __updateImage(1, e.target.files[0]);
+                      }
                     }}
                   />
                 </label>
@@ -361,7 +366,9 @@ function Summary({
                     accept="image/x-png,image/gif,image/jpeg"
                     onChange={(e) => {
                       setFocus(undefined);
-                      __updateImage(2, e.target.files[0]);
+                      if (e.target.files) {
+                        __updateImage(2, e.target.files[0]);
+                      }
                     }}
                   />
                 </label>
