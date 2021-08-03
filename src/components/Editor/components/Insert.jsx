@@ -43,18 +43,28 @@ function Insert({ setIsUp, temKey }) {
       var reader = new FileReader();
       reader.onload = function (e) {
         const imageUrl = e.target.result;
-        Resizer.imageFileResizer(
-          file,
-          5,
-          5,
-          "JPEG",
-          100,
-          0,
-          (uri) => {
-            resolve({ url: imageUrl, resize: uri, name: file.name });
-          },
-          "base64"
-        );
+        var img = new Image();
+        img.src = imageUrl;
+        img.onload = function (e) {
+          Resizer.imageFileResizer(
+            file,
+            5,
+            5,
+            "JPEG",
+            100,
+            0,
+            (uri) => {
+              resolve({
+                url: imageUrl,
+                resize: uri,
+                name: file.name,
+                width: this.width,
+                height: this.height,
+              });
+            },
+            "base64"
+          );
+        };
       };
       reader.readAsDataURL(file);
     });
@@ -76,11 +86,13 @@ function Insert({ setIsUp, temKey }) {
       );
       base64.then((result) => {
         Promise.all(
-          result.map(({ url, name, resize }) => {
+          result.map(({ url, name, resize, width, height }) => {
             const po = __imageUpload(url, name, resize).then((result) => {
               return {
                 type: "IMAGE",
                 content: result,
+                width,
+                height,
                 id: `image-${
                   new Date().getTime() -
                   Math.floor(Math.random() * (100 - 1 + 1)) +

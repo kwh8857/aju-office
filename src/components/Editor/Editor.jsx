@@ -17,6 +17,7 @@ function Editor({ location }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { type, timestamp, category, id } = location.state;
+  console.log(id);
   const temKey = useSelector((state) => state.database.key);
   const template = useSelector((state) => state.database.editor);
 
@@ -136,6 +137,7 @@ function Editor({ location }) {
               payload: [],
             });
           }
+          console.log(value.template);
           dispatch({
             type: "@layouts/CHANGE_EDITOR",
             payload: value.template,

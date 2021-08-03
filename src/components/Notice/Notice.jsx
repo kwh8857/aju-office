@@ -193,22 +193,22 @@ function Notice() {
       });
     return arr.sort((a, b) => b.timestamp - a.timestamp);
   }, []);
-    const __deleteCard = useCallback(
-      (id, file) => {
-        firebaseApp
-          .firestore()
-          .collection("editor")
-          .doc(id)
-          .delete()
-          .then(() => {
-            __getData().then((result) => {
-              setListData(result);
-              setDisplayList(result);
-            });
+  const __deleteCard = useCallback(
+    (id, file) => {
+      firebaseApp
+        .firestore()
+        .collection("editor")
+        .doc(id)
+        .delete()
+        .then(() => {
+          __getData().then((result) => {
+            setListData(result);
+            setDisplayList(result);
           });
-      },
-      [__getData]
-    );
+        });
+    },
+    [__getData]
+  );
   useMemo(
     () =>
       __getData().then((result) => {
@@ -231,8 +231,8 @@ function Notice() {
                   placeholder="프로젝트명 검색"
                   onChange={(e) => {
                     const val = e.target.value;
-                    const filt = ListData.filter((item) =>
-                      item.title.includes(val)
+                    const filt = ListData.filter(
+                      (item) => item.title && item.title.includes(val)
                     );
                     setDisplayList(filt);
                   }}
