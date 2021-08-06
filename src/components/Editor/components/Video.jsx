@@ -111,7 +111,14 @@ function Video({ __close, template, temKey }) {
         src="/assets/editor/cancel.svg"
         alt=""
         className="cancel"
-        onClick={__close}
+        onClick={() => {
+          const filt = List.filter((item) => item.upload);
+          if (filt.length === 0) {
+            __close();
+          } else {
+            alert("업로드 중인 영상이 있습니다.");
+          }
+        }}
       />
       <div className="popup-title">동영상 업로드</div>
       <label className="list-wrapper">
