@@ -34,11 +34,11 @@ const Wrapper = styled.div`
 function Header() {
   return (
     <Wrapper>
-      <Link to="/main">
+      <Link to="/">
         <img src="/assets/logo.svg" alt="Aju" />
       </Link>
       <div className="right">
-        <Link to="/main">공사실적관리</Link>
+        <Link to="/">공사실적관리</Link>
         <Link to="/notice">공지사항관리</Link>
       </div>
     </Wrapper>

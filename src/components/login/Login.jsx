@@ -1,6 +1,7 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import firebaseApp from "../config/firebaseApp";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   background-color: #f7f7f7;
@@ -100,11 +101,39 @@ const Body = styled.div`
     }
   }
 `;
+const Fauth = firebaseApp.auth();
 function Login() {
-  const history = useHistory();
-  const Nav = useCallback(() => {
-    history.push("/main");
-  }, [history]);
+  const dispatch = useDispatch();
+  const IdRef = useRef(null);
+  const PasswordRef = useRef(null);
+  const __login = useCallback(() => {
+    Fauth.setPersistence(firebaseApp.auth.Auth.Persistence.SESSION).then(() => {
+      return Fauth.signInWithEmailAndPassword(
+        `${IdRef.current.value}@ajoo.com`,
+        PasswordRef.current.value
+      )
+        .then((result) => {
+          const {
+            user: { uid },
+          } = result;
+          if (uid === "wQHhbrR0eVgM0lx0wkNiGcv2dvL2") {
+            dispatch({
+              type: "@config/isLogin",
+              payload: true,
+            });
+          } else {
+            alert("등록된 관리자가 아닙니다 접근에 주의하세요");
+          }
+        })
+        .catch((err) => {
+          if (err.code === "auth/user-not-found") {
+            alert("존재하지않는 유저이거나 잘못된 이메일입니다");
+          } else if (err.code === "auth/wrong-password") {
+            alert("비밀번호가 맞지않습니다");
+          }
+        });
+    });
+  }, [IdRef, PasswordRef, dispatch]);
   return (
     <Wrapper>
       <Header>
@@ -118,10 +147,18 @@ function Login() {
           <div className="bottom">
             <div className="title">아주종합건설 관리자페이지입니다</div>
             <div className="input-wrapper">
-              <input type="text" placeholder="아이디를 입력해주세요" />
-              <input type="password" placeholder="비밀번호를 입력해주세요" />
+              <input
+                type="text"
+                placeholder="아이디를 입력해주세요"
+                ref={IdRef}
+              />
+              <input
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                ref={PasswordRef}
+              />
             </div>
-            <div className="btn" onClick={Nav}>
+            <div className="btn" onClick={__login}>
               관리자 로그인하기
             </div>
           </div>
