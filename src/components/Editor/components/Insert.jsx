@@ -21,18 +21,27 @@ function Insert({ setIsUp, temKey }) {
       return new Promise((resolve, reject) => {
         const data = data64.split(",")[1];
         const redata = resize.split(",")[1];
+        console.log("여기까지 돔");
         Fstorage.ref(`editor/${temKey}/${name}`)
           .putString(data, "base64")
           .then((result) => {
-            result.ref.getDownloadURL().then((downloadUrl) => {
-              Fstorage.ref(`editor/${temKey}/${name}-resize`)
-                .putString(redata, "base64")
-                .then((result) => {
-                  result.ref.getDownloadURL().then((resizeUrl) => {
-                    resolve({ url: downloadUrl, resize: resizeUrl });
+            result.ref
+              .getDownloadURL()
+              .then((downloadUrl) => {
+                Fstorage.ref(`editor/${temKey}/${name}-resize`)
+                  .putString(redata, "base64")
+                  .then((result) => {
+                    result.ref.getDownloadURL().then((resizeUrl) => {
+                      resolve({ url: downloadUrl, resize: resizeUrl });
+                    });
                   });
-                });
-            });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((err) => {
+            console.log(err);
           });
       });
     },
