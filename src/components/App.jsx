@@ -14,7 +14,7 @@ function Navigation() {
   const isLogin = useSelector((state) => state.config.isLogin);
   useEffect(() => {
     Fauth.onAuthStateChanged((user) => {
-      if (user.uid === "wQHhbrR0eVgM0lx0wkNiGcv2dvL2") {
+      if (user && user.uid === "wQHhbrR0eVgM0lx0wkNiGcv2dvL2") {
         dispatch({
           type: "@config/isLogin",
           payload: true,

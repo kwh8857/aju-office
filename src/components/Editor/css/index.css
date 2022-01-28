@@ -95,7 +95,7 @@
       -ms-flex-align: center;
           align-items: center;
   position: fixed;
-  z-index: 200;
+  z-index: 900;
 }
 
 #root .editor .editor-wrapper .edit-header .line {
@@ -336,7 +336,7 @@
 
 #root .editor .editor-wrapper .editor-screen .template-video .dnd-icon {
   width: 50px;
-  z-index: 1000;
+  z-index: 800;
   position: absolute;
   right: 0;
   top: 3px;
@@ -362,7 +362,7 @@
 
 #root .editor .editor-wrapper .editor-screen .template-youtube .dnd-icon {
   width: 50px;
-  z-index: 1000;
+  z-index: 800;
   position: absolute;
   right: 0;
   top: 0;
@@ -437,7 +437,7 @@
 }
 
 #root .editor .editor-wrapper .editor-screen .template-title .dnd-icon {
-  z-index: 1000;
+  z-index: 800;
   position: absolute;
   right: 0;
   top: 0;

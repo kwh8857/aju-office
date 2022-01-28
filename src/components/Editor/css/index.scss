@@ -65,6 +65,7 @@ $gray3: #dbdbdb;
       box-sizing: border-box;
 
       .edit-header {
+        
         top: 64px;
         left: 0;
         background-color: white;
@@ -74,7 +75,7 @@ $gray3: #dbdbdb;
         border-bottom: solid 1px $gray3;
         align-items: center;
         position: fixed;
-        z-index: 200;
+        z-index: 900;
 
         .line {
           height: 29px;
@@ -265,7 +266,7 @@ $gray3: #dbdbdb;
 
           .dnd-icon {
             width: 50px;
-            z-index: 1000;
+            z-index: 800;
             position: absolute;
             right: 0;
             top: 3px;
@@ -289,7 +290,7 @@ $gray3: #dbdbdb;
 
           .dnd-icon {
             width: 50px;
-            z-index: 1000;
+            z-index: 800;
             position: absolute;
             right: 0;
             top: 0;
@@ -358,7 +359,7 @@ $gray3: #dbdbdb;
           }
 
           .dnd-icon {
-            z-index: 1000;
+            z-index: 800;
             position: absolute;
             right: 0;
             top: 0;

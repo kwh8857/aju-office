@@ -108,6 +108,10 @@ function Editor({ location }) {
             type: "@layouts/INIT_KEY",
             payload: res.id,
           });
+          dispatch({
+            type: "@layouts/INIT_VIDEO",
+            payload: [],
+          });
         })
         .catch((err) => {
           console.log(err);
