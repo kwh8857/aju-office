@@ -17,7 +17,6 @@ function Editor({ location }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { type, timestamp, category, id } = location.state;
-  console.log(id);
   const temKey = useSelector((state) => state.database.key);
   const template = useSelector((state) => state.database.editor);
 
@@ -27,6 +26,8 @@ function Editor({ location }) {
         return {
           title: undefined,
           sub: undefined,
+          year: undefined,
+          kind: undefined,
         };
       case "INIT":
         return action.info;
@@ -34,6 +35,10 @@ function Editor({ location }) {
         return { ...state, title: action.title };
       case "SUB":
         return { ...state, sub: action.sub };
+      case "YEAR":
+        return { ...state, year: action.year };
+      case "KIND":
+        return { ...state, kind: action.kind };
       default:
         throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -42,6 +47,8 @@ function Editor({ location }) {
   const [info, patch] = useReducer(reducer, {
     title: undefined,
     sub: undefined,
+    year: undefined,
+    kind: undefined,
   });
   const [isUp, setIsUp] = useState({
     status: false,
@@ -51,7 +58,7 @@ function Editor({ location }) {
   const __updateData = useCallback(
     (path) => {
       if (category === "portfolio") {
-        const { title, sub } = info;
+        const { title, sub, kind, year } = info;
         const mainfilt = template.filter(({ type }) => type === "IMAGE");
         Fstore.collection("editor")
           .doc(temKey)
@@ -59,6 +66,8 @@ function Editor({ location }) {
             template: template,
             title: title ? title : "임시저장",
             sub: sub ? sub : "",
+            kind: kind ? kind : "",
+            year: year ? year : "",
             mainimg:
               mainfilt.length > 0
                 ? mainfilt[0].content
@@ -122,12 +131,14 @@ function Editor({ location }) {
         .get()
         .then((result) => {
           const value = result.data();
-
           patch({
             type: "INIT",
             info: {
               title: value.title,
               sub: category !== "notice" ? value.sub : undefined,
+              kind:
+                category !== "notice" && value.kind ? value.kind : undefined,
+              year: category !== "notce" && value.year ? value.year : undefined,
             },
           });
           if (value.videoList) {

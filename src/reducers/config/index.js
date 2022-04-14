@@ -3,7 +3,7 @@ const initialState = {
     version: "0.0.1",
     state: "test",
   },
-  isLogin: false,
+  isLogin: true,
   isLoading: false,
 };
 const config = (state = initialState, { type, payload }) => {

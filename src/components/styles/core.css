@@ -24,6 +24,10 @@ body {
   color: black;
 }
 
+button {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 ul,
 li,
 ol {

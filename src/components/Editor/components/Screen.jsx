@@ -18,7 +18,6 @@ resetServerContext();
 function Screen({ temKey, Fstore, Fstorage }) {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.database.editor);
-  console.log(template);
   const [foucsIdx, setFoucsIdx] = useState(0);
   const handleOnDragEnd = useCallback(
     (result) => {
