@@ -45,8 +45,8 @@ const Wrapper = styled.div`
     display: flex;
     .main {
       border: solid 1px #dbdbdb;
-      margin-right: 31px;
-      width: 671px;
+      margin-right: 11px;
+      width: 640px;
       height: 490px;
       background-color: #f7f7f7;
       display: flex;
@@ -79,6 +79,7 @@ const Wrapper = styled.div`
       }
     }
     p {
+      font-family: "Noto Sans KR", sans-serif !important;
       overflow: hidden;
       text-overflow: ellipsis;
       cursor: text;
@@ -233,7 +234,7 @@ function Summary({
               ref={contentRef}
               suppressContentEditableWarning={true}
               onKeyDown={(e) => {
-                if (contentRef.current.offsetHeight > 300 && e.keyCode !== 8) {
+                if (contentRef.current.offsetHeight > 492 && e.keyCode !== 8) {
                   const test = contentRef.current.childNodes;
                   test[test.length - 1].remove();
                 }

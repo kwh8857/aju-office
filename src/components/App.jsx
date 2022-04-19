@@ -12,22 +12,22 @@ const Fauth = firebaseApp.auth();
 function Navigation() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.config.isLogin);
-  // useEffect(() => {
-  //   Fauth.onAuthStateChanged((user) => {
-  //     if (user && user.uid === "wQHhbrR0eVgM0lx0wkNiGcv2dvL2") {
-  //       dispatch({
-  //         type: "@config/isLogin",
-  //         payload: true,
-  //       });
-  //     } else {
-  //       dispatch({
-  //         type: "@config/isLogin",
-  //         payload: false,
-  //       });
-  //     }
-  //   });
-  //   return () => {};
-  // }, [dispatch]);
+  useEffect(() => {
+    Fauth.onAuthStateChanged((user) => {
+      if (user && user.uid === "wQHhbrR0eVgM0lx0wkNiGcv2dvL2") {
+        dispatch({
+          type: "@config/isLogin",
+          payload: true,
+        });
+      } else {
+        dispatch({
+          type: "@config/isLogin",
+          payload: false,
+        });
+      }
+    });
+    return () => {};
+  }, [dispatch]);
 
   return (
     <Router>
