@@ -7,8 +7,8 @@ import Resizer from "react-image-file-resizer";
 import firebaseApp from "../../../config/firebaseApp";
 const Fstorage = firebaseApp.storage();
 const Label = styled.div`
-  width: 143px;
-  height: 139px;
+  width: 153px;
+  height: 153px;
   background-color: #f7f7f7;
   border: solid 1px #dbdbdb;
   .list-img {
@@ -38,55 +38,51 @@ const Label = styled.div`
 `;
 const Wrapper = styled.div`
   width: 100%;
-  height: 490px;
-  display: flex;
+  height: 700px;
   position: relative;
   z-index: 10;
-  .main {
-    border: solid 1px #dbdbdb;
-    margin-right: 12px;
-    width: 503px;
-    height: 490px;
-    background-color: #f7f7f7;
+  & > .top {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    label {
-      position: relative;
+    .main {
+      border: solid 1px #dbdbdb;
+      margin-right: 31px;
+      width: 671px;
+      height: 490px;
+      background-color: #f7f7f7;
       display: flex;
-      width: 100%;
-      height: 100%;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
-
-      .true-image {
+      label {
+        position: relative;
+        display: flex;
         width: 100%;
         height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .true-image {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
+      .sub {
+        margin-top: 11px;
+        font-size: 14px;
+        font-weight: normal;
+        color: #bfbfbf;
+        text-align: center;
+        line-height: 1.57;
       }
     }
-    .sub {
-      margin-top: 11px;
-      font-size: 14px;
-      font-weight: normal;
-      color: #bfbfbf;
-      text-align: center;
-      line-height: 1.57;
-    }
-  }
-  .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     p {
       overflow: hidden;
       text-overflow: ellipsis;
       cursor: text;
-      width: 454px;
+      width: 290px;
       height: auto;
       white-space: pre-wrap;
       word-wrap: break-word;
@@ -96,11 +92,17 @@ const Wrapper = styled.div`
       color: #bfbfbf;
       font-size: 17px;
     }
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     .list {
       display: grid;
-      grid-template-columns: repeat(3, 143px);
-      column-gap: 14px;
-      margin-top: 25px;
+      grid-template-columns: repeat(6, 153px);
+      column-gap: 10px;
+      margin-top: 39px;
     }
   }
 `;
@@ -213,18 +215,18 @@ function Summary({
           />
         </div>
         <Wrapper>
-          <div className="main">
-            <label>
-              {images[nowIdx] ? (
-                <img className="true-image" src={images[nowIdx].img} alt="" />
-              ) : undefined}
+          <div className="top">
+            <div className="main">
+              <label>
+                {images[nowIdx] ? (
+                  <img className="true-image" src={images[nowIdx].img} alt="" />
+                ) : undefined}
 
-              <div className="sub">
-                사진을 업로드해주세요 <br /> jpeg, png, gif
-              </div>
-            </label>
-          </div>
-          <div className="content">
+                <div className="sub">
+                  사진을 업로드해주세요 <br /> jpeg, png, gif
+                </div>
+              </label>
+            </div>
             <p
               placeholder="내용을 입력해주세요"
               contentEditable={true}
@@ -288,6 +290,8 @@ function Summary({
                 }
               }}
             ></p>
+          </div>
+          <div className="content">
             <div className="list">
               <Label
                 onMouseOver={() => {
@@ -368,6 +372,90 @@ function Summary({
                       setFocus(undefined);
                       if (e.target.files) {
                         __updateImage(2, e.target.files[0]);
+                      }
+                    }}
+                  />
+                </label>
+              </Label>
+              <Label
+                onMouseOver={() => {
+                  if (images[3]) {
+                    setNowIdx(3);
+                  }
+                }}
+              >
+                <label>
+                  {images[3] ? (
+                    <img className="sub-image" src={images[3].img} alt="" />
+                  ) : undefined}
+                  <img
+                    className="list-img"
+                    src="/assets/editor/grey-plus.png"
+                    alt="추가"
+                  />
+                  <input
+                    type="file"
+                    accept="image/x-png,image/gif,image/jpeg"
+                    onChange={(e) => {
+                      setFocus(undefined);
+                      if (e.target.files) {
+                        __updateImage(3, e.target.files[0]);
+                      }
+                    }}
+                  />
+                </label>
+              </Label>
+              <Label
+                onMouseOver={() => {
+                  if (images[4]) {
+                    setNowIdx(4);
+                  }
+                }}
+              >
+                <label>
+                  {images[4] ? (
+                    <img className="sub-image" src={images[4].img} alt="" />
+                  ) : undefined}
+                  <img
+                    className="list-img"
+                    src="/assets/editor/grey-plus.png"
+                    alt="추가"
+                  />
+                  <input
+                    type="file"
+                    accept="image/x-png,image/gif,image/jpeg"
+                    onChange={(e) => {
+                      setFocus(undefined);
+                      if (e.target.files) {
+                        __updateImage(4, e.target.files[0]);
+                      }
+                    }}
+                  />
+                </label>
+              </Label>
+              <Label
+                onMouseOver={() => {
+                  if (images[5]) {
+                    setNowIdx(5);
+                  }
+                }}
+              >
+                <label>
+                  {images[5] ? (
+                    <img className="sub-image" src={images[5].img} alt="" />
+                  ) : undefined}
+                  <img
+                    className="list-img"
+                    src="/assets/editor/grey-plus.png"
+                    alt="추가"
+                  />
+                  <input
+                    type="file"
+                    accept="image/x-png,image/gif,image/jpeg"
+                    onChange={(e) => {
+                      setFocus(undefined);
+                      if (e.target.files) {
+                        __updateImage(5, e.target.files[0]);
                       }
                     }}
                   />
