@@ -35,7 +35,8 @@ const Wrapper = styled.div`
   .grid-wrapper {
     margin-top: 30px;
     display: grid;
-    grid-template-columns: 544px 231px 231px;
+    grid-template-columns: ${(props) =>
+      props.category === "notice" ? "100%" : "544px 231px 231px"};
     column-gap: 13px;
     & > .right-wrapper {
       position: relative;
@@ -152,6 +153,7 @@ function TitleSection({
       isYear={isYear}
       year={year}
       yearlength={yearArray.length}
+      category={category}
     >
       <div className="top">
         <div className="title">
@@ -205,68 +207,72 @@ function TitleSection({
             }}
           />
         </div>
-        <div className="right-wrapper">
-          <div className="ti">유형</div>
-          <div
-            className="btn-wrapper kind"
-            onClick={() => {
-              setIsKind(!isKind);
-            }}
-          >
-            <button className="now">
-              {kind ? kind : "유형 선택"}
-              <img src="/assets/editor/grey-down.svg" alt="" />
-            </button>
-            {kindarr.map((item, idx) => {
-              return (
-                <button
-                  className="select"
-                  key={idx}
-                  onClick={() => {
-                    dispatch({
-                      type: "KIND",
-                      kind: item,
-                    });
-                    setIsKind(false);
-                  }}
-                >
-                  {item}
+        {category !== "notice" ? (
+          <>
+            <div className="right-wrapper">
+              <div className="ti">유형</div>
+              <div
+                className="btn-wrapper kind"
+                onClick={() => {
+                  setIsKind(!isKind);
+                }}
+              >
+                <button className="now">
+                  {kind ? kind : "유형 선택"}
+                  <img src="/assets/editor/grey-down.svg" alt="" />
                 </button>
-              );
-            })}
-          </div>
-        </div>
-        <div className="right-wrapper">
-          <div className="ti">공사연도</div>
-          <div
-            className="btn-wrapper year"
-            onClick={() => {
-              setIsYear(!isYear);
-            }}
-          >
-            <button className="now">
-              {year ? year : "연도 선택"}{" "}
-              <img src="/assets/editor/grey-down.svg" alt="" />
-            </button>
-            {yearArray.map((item, idx) => {
-              return (
-                <button
-                  key={idx}
-                  className="select"
-                  onClick={() => {
-                    dispatch({
-                      type: "YEAR",
-                      year: item,
-                    });
-                    setIsYear(false);
-                  }}
-                >
-                  {item}
+                {kindarr.map((item, idx) => {
+                  return (
+                    <button
+                      className="select"
+                      key={idx}
+                      onClick={() => {
+                        dispatch({
+                          type: "KIND",
+                          kind: item,
+                        });
+                        setIsKind(false);
+                      }}
+                    >
+                      {item}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="right-wrapper">
+              <div className="ti">공사연도</div>
+              <div
+                className="btn-wrapper year"
+                onClick={() => {
+                  setIsYear(!isYear);
+                }}
+              >
+                <button className="now">
+                  {year ? year : "연도 선택"}{" "}
+                  <img src="/assets/editor/grey-down.svg" alt="" />
                 </button>
-              );
-            })}
-          </div>
-        </div>
+                {yearArray.map((item, idx) => {
+                  return (
+                    <button
+                      key={idx}
+                      className="select"
+                      onClick={() => {
+                        dispatch({
+                          type: "YEAR",
+                          year: item,
+                        });
+                        setIsYear(false);
+                      }}
+                    >
+                      {item}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        ) : undefined}
       </div>
 
       {category !== "notice" ? (

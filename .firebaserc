@@ -1,14 +1,5 @@
 {
   "projects": {
-    "default": "ajoo-b2135"
-  },
-  "targets": {
-    "ajoo-b2135": {
-      "hosting": {
-        "office": [
-          "ajoo-office"
-        ]
-      }
-    }
+    "default": "ajoo-office"
   }
 }
