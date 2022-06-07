@@ -64,9 +64,6 @@ function Screen({ temKey, Fstore, Fstorage }) {
             Fstorage.refFromURL(resize).delete();
             Fstorage.refFromURL(url).delete();
           }
-          if (nowTemplate.type === "VIDEO") {
-            Fstorage.refFromURL(nowTemplate.content).delete();
-          }
           if (nowTemplate.type === "SUMMARY") {
             nowTemplate.content.images.forEach(({ resize, img }) => {
               Fstorage.refFromURL(resize).delete();
@@ -160,6 +157,7 @@ function Screen({ temKey, Fstore, Fstorage }) {
                             provided={provided}
                             idx={idx}
                             template={template}
+                            focusIdx={foucsIdx}
                           />
                         );
                       } else if (type === "SUMMARY") {

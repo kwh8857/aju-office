@@ -1,12 +1,12 @@
-import React from 'react';
-import TemplateEmty from './TemplateEmty';
+import React from "react";
+import TemplateEmty from "./TemplateEmty";
 
-function TemplateVideo({ data, provided, template, idx, setFocus }) {
+function TemplateVideo({ data, provided, template, idx, setFocus, focusIdx }) {
   return (
     <>
       {idx === 0 ? <TemplateEmty idx={idx} /> : undefined}
       <div
-        className="template-video"
+        className={`template-video ${focusIdx === idx ? "active-blue" : ""}`}
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
@@ -22,7 +22,7 @@ function TemplateVideo({ data, provided, template, idx, setFocus }) {
         </div>
         <video src={data} controls></video>
       </div>
-      {!template[idx + 1] || template[idx + 1].type !== 'TITLE' ? (
+      {!template[idx + 1] || template[idx + 1].type !== "TITLE" ? (
         <TemplateEmty idx={idx + 1} />
       ) : undefined}
     </>
