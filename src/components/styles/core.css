@@ -6,26 +6,24 @@
   scrollbar-width: none;
   -webkit-font-smoothing: antialiased;
 }
-
 * [contenteditable=true]:empty:before {
   content: attr(placeholder);
-  display: block;
-  /* For Firefox */
+  display: block; /* For Firefox */
   color: #bfbfbf;
   font-size: 17px;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 html,
 body {
   width: 100%;
   height: 100%;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   color: black;
 }
 
 button {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 ul,
@@ -53,9 +51,8 @@ textarea {
           box-sizing: border-box;
   -webkit-appearance: none;
   resize: none;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
-
 input:focus,
 p:focus,
 textarea:focus {
@@ -73,4 +70,3 @@ textarea:focus {
 img {
   width: 100%;
 }
-/*# sourceMappingURL=core.css.map */

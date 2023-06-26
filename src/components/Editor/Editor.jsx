@@ -59,7 +59,19 @@ function Editor({ location }) {
     (path) => {
       if (category === "portfolio") {
         const { title, sub, kind, year } = info;
-        const mainfilt = template.filter(({ type }) => type === "IMAGE");
+        let mainimg = null;
+        const mainfilt = template.filter(({ type }) => type === "SUMMARY");
+        if (
+          mainfilt.length > 0 &&
+          mainfilt[0].content.images.length > 0 &&
+          mainfilt[0].content.images[0].img
+        ) {
+          mainimg = {
+            resize: mainfilt[0].content.images[0].resize,
+            url: mainfilt[0].content.images[0].img,
+          };
+        }
+        console.log(mainfilt);
         Fstore.collection("editor")
           .doc(temKey)
           .update({
@@ -68,14 +80,13 @@ function Editor({ location }) {
             sub: sub ? sub : "",
             kind: kind ? kind : "",
             year: year ? year : "",
-            mainimg:
-              mainfilt.length > 0
-                ? mainfilt[0].content
-                : {
-                    resize:
-                      "https://firebasestorage.googleapis.com/v0/b/steadee-pf.appspot.com/o/editor%2Fbasic%2Fbasic-reszie.jpeg?alt=media&token=42033a61-6b83-4627-990d-9dc0c713a152",
-                    url: "https://firebasestorage.googleapis.com/v0/b/steadee-pf.appspot.com/o/editor%2Fbasic%2Fbasic.jpeg?alt=media&token=62440937-0aed-4387-8199-fa5c1c572b48",
-                  },
+            mainimg: mainimg
+              ? mainimg
+              : {
+                  resize:
+                    "https://firebasestorage.googleapis.com/v0/b/steadee-pf.appspot.com/o/editor%2Fbasic%2Fbasic-reszie.jpeg?alt=media&token=42033a61-6b83-4627-990d-9dc0c713a152",
+                  url: "https://firebasestorage.googleapis.com/v0/b/steadee-pf.appspot.com/o/editor%2Fbasic%2Fbasic.jpeg?alt=media&token=62440937-0aed-4387-8199-fa5c1c572b48",
+                },
           })
           .then(() => {
             setIsExit(true);

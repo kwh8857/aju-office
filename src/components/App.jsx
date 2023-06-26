@@ -7,6 +7,7 @@ import Editor from "./Editor/Editor";
 import Notice from "./Notice/Notice";
 import { useDispatch, useSelector } from "react-redux";
 import firebaseApp from "./config/firebaseApp";
+import Pdf from "./Pdf/Pdf";
 
 const Fauth = firebaseApp.auth();
 function Navigation() {
@@ -37,6 +38,7 @@ function Navigation() {
             <Route path="/" exact component={Main} />
             <Route path="/notice" exact component={Notice} />
             <Route path="/editor" exact component={Editor} />
+            <Route path="/pdf" exact component={Pdf} />
           </>
         ) : (
           <Route path="/" exact component={Login} />

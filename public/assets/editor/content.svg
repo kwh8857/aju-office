@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="89" height="33" viewBox="0 0 89 33">
+    <g data-name="image temp2">
+        <g data-name="사각형 869" style="stroke:#dbdbdb;fill:none">
+            <rect width="89" height="33" rx="5" style="stroke:none"/>
+            <rect x=".5" y=".5" width="88" height="32" rx="4.5" style="fill:none"/>
+        </g>
+        <text transform="translate(37 21)" style="fill:#898989;font-size:12px;font-family:NotoSansCJKkr-Regular,Noto Sans CJK KR"><tspan x="0" y="0">공사내용</tspan></text>
+        <g data-name="그룹 5232" transform="translate(-484.5 -314)">
+            <rect data-name="사각형 2935" width="16" height="16" rx="2" transform="translate(492 323)" style="fill:#dbdbdb"/>
+            <path data-name="선 746" transform="translate(510.5 324.925)" style="stroke-width:3px;stroke:#dbdbdb;fill:none" d="M0 0h7"/>
+            <path data-name="선 747" transform="translate(510.5 331)" style="stroke-width:3px;stroke:#dbdbdb;fill:none" d="M0 0h7"/>
+            <path data-name="선 748" transform="translate(510.5 337.075)" style="stroke-width:3px;stroke:#dbdbdb;fill:none" d="M0 0h7"/>
+        </g>
+    </g>
+</svg>

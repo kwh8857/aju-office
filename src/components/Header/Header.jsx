@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   z-index: 1000;
   .right {
     display: grid;
-    grid-template-columns: repeat(2, 77px);
+    grid-template-columns: repeat(3, 77px);
     column-gap: 56px;
     a {
       font-size: 14px;
@@ -38,6 +38,7 @@ function Header() {
         <img src="/assets/logo.svg" alt="Aju" />
       </Link>
       <div className="right">
+        <Link to="/pdf">공사지명원관리</Link>
         <Link to="/">공사실적관리</Link>
         <Link to="/notice">공지사항관리</Link>
       </div>

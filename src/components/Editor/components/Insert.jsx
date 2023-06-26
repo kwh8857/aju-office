@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import Resizer from "react-image-file-resizer";
 import firebaseApp from "../../config/firebaseApp";
 const dummy = [
-  { img: "summary", type: "SUMMARY" },
+  { img: "content", type: "SUMMARY" },
+  { img: "summary", type: "CONTENT" },
   { img: "temp", type: "IMAGE" },
   { img: "video", type: "VIDEO" },
-  // { img: "youtube", type: "YOUTUBE" },
   // { img: "link", type: "LINK" },
   // { img: "file", type: "FILE" },
 ];
@@ -137,7 +137,11 @@ function Insert({ setIsUp, temKey }) {
             className="test-img"
             key={idx}
             onClick={() => {
-              if (type !== "IMAGE" && type !== "SUMMARY") {
+              if (
+                type !== "IMAGE" &&
+                type !== "SUMMARY" &&
+                type !== "CONTENT"
+              ) {
                 setIsUp({
                   status: true,
                   type: type,
@@ -151,6 +155,23 @@ function Insert({ setIsUp, temKey }) {
                     images: [],
                   },
                   id: `summary-${
+                    new Date().getTime() -
+                    Math.floor(Math.random() * (100 - 1 + 1)) +
+                    1
+                  }`,
+                });
+                dispatch({
+                  type: "@layouts/CHANGE_EDITOR",
+                  payload: arr,
+                });
+              } else if (type === "CONTENT") {
+                let arr = template.slice();
+                arr.push({
+                  type: "CONTENT",
+                  content: {
+                    images: [],
+                  },
+                  id: `content-${
                     new Date().getTime() -
                     Math.floor(Math.random() * (100 - 1 + 1)) +
                     1

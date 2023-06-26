@@ -13,6 +13,7 @@ import TemplateTitle from "./Template/TemplateTitle";
 import TemplateVideo from "./Template/TemplateVideo";
 // import TemplateYoutube from "./Template/TemplateYoutube";
 import Summary from "./Template/Summary";
+import TemplateContent from "./Template/TemplateContent";
 resetServerContext();
 
 function Screen({ temKey, Fstore, Fstorage }) {
@@ -174,19 +175,18 @@ function Screen({ temKey, Fstore, Fstorage }) {
                             temKey={temKey}
                           />
                         );
+                      } else if (type === "CONTENT") {
+                        return (
+                          <TemplateContent
+                            key={idx}
+                            data={content}
+                            setFocus={setFoucsIdx}
+                            provided={provided}
+                            idx={idx}
+                            template={template}
+                          />
+                        );
                       }
-                      // else if (type === 'YOUTUBE') {
-                      //   return (
-                      //     <TemplateYoutube
-                      //       key={idx}
-                      //       data={content}
-                      //       setFocus={setFoucsIdx}
-                      //       provided={provided}
-                      //       idx={idx}
-                      //       template={template}
-                      //     />
-                      //   );
-                      // }
                     }}
                   </Draggable>
                 );
