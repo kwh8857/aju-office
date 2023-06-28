@@ -66,8 +66,10 @@ function Screen({ temKey, Fstore, Fstorage }) {
             Fstorage.refFromURL(url).delete();
           }
           if (nowTemplate.type === "SUMMARY") {
-            Fstorage.refFromURL(nowTemplate.content.img.resize).delete();
-            Fstorage.refFromURL(nowTemplate.content.img.img).delete();
+            if (nowTemplate.content.img.img) {
+              Fstorage.refFromURL(nowTemplate.content.img.resize).delete();
+              Fstorage.refFromURL(nowTemplate.content.img.img).delete();
+            }
           }
           arr.splice(foucsIdx, 1);
           Fstore.collection("editor").doc(temKey).update({ template: arr });
