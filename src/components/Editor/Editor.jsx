@@ -63,15 +63,13 @@ function Editor({ location }) {
         const mainfilt = template.filter(({ type }) => type === "SUMMARY");
         if (
           mainfilt.length > 0 &&
-          mainfilt[0].content.images.length > 0 &&
-          mainfilt[0].content.images[0].img
+          mainfilt[0].content.img.img
         ) {
           mainimg = {
-            resize: mainfilt[0].content.images[0].resize,
-            url: mainfilt[0].content.images[0].img,
+            resize: mainfilt[0].content.img.resize,
+            url: mainfilt[0].content.img.img,
           };
         }
-        console.log(mainfilt);
         Fstore.collection("editor")
           .doc(temKey)
           .update({

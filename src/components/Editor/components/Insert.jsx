@@ -152,7 +152,7 @@ function Insert({ setIsUp, temKey }) {
                   type: "SUMMARY",
                   content: {
                     text: "",
-                    images: [],
+                    img: "",
                   },
                   id: `summary-${
                     new Date().getTime() -

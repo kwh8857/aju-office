@@ -87,7 +87,7 @@ const database = (state = initialState, { type, idx, payload, index }) => {
     }
     case "@layouts/CHANGE_SUMMARY_IMAGE": {
       var edr = state.editor;
-      edr[idx].content.images[index] = payload;
+      edr[idx].content.img = payload;
       return {
         ...state,
         editor: [...edr],
