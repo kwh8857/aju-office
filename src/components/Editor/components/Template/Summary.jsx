@@ -16,8 +16,8 @@ const Wrapper = styled.div`
     column-gap: 10px;
     .main {
       border: solid 1px #dbdbdb;
-      /* width: 640px; */
-      height: 490px;
+      width: 503px;
+      height: 312px;
       background-color: #f7f7f7;
       display: flex;
       align-items: center;
