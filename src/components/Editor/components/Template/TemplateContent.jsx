@@ -160,7 +160,7 @@ function TemplateContent({
           }),
         ]).then((result) => {
           dispatch({
-            type: "@layouts/CHANGE_SUMMARY_IMAGE",
+            type: "@layouts/CHANGE_CONTENT_IMAGE",
             idx,
             payload: {
               img: result[1],

@@ -23,13 +23,11 @@ function Card({ title, timestamp, navigation, id, template, __delete }) {
           Fstorage.refFromURL(content).delete();
         }
         if (type === "SUMMARY") {
-          const { images } = content;
-          images.forEach(({ resize, img }) => {
-            console.log(img);
-            console.log(resize);
-            Fstorage.refFromURL(resize).delete();
-            Fstorage.refFromURL(img).delete();
-          });
+          const {
+            img: { img, resize },
+          } = content;
+          Fstorage.refFromURL(resize).delete();
+          Fstorage.refFromURL(img).delete();
         }
       });
     }

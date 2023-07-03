@@ -93,6 +93,14 @@ const database = (state = initialState, { type, idx, payload, index }) => {
         editor: [...edr],
       };
     }
+    case "@layouts/CHANGE_CONTENT_IMAGE": {
+      var edr = state.editor;
+      edr[idx].content.images[index] = payload;
+      return {
+        ...state,
+        editor: [...edr],
+      };
+    }
     default:
       return state;
   }

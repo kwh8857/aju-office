@@ -1,0 +1,25 @@
+[debug] [2023-07-03T01:11:42.698Z] ----------------------------------------------------------------------
+[debug] [2023-07-03T01:11:42.700Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting
+[debug] [2023-07-03T01:11:42.700Z] CLI Version:   11.28.0
+[debug] [2023-07-03T01:11:42.700Z] Platform:      darwin
+[debug] [2023-07-03T01:11:42.700Z] Node Version:  v18.15.0
+[debug] [2023-07-03T01:11:42.702Z] Time:          Mon Jul 03 2023 10:11:42 GMT+0900 (대한민국 표준시)
+[debug] [2023-07-03T01:11:42.702Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-07-03T01:11:42.769Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-07-03T01:11:42.769Z] > authorizing via signed-in user (loveakwodbs@gmail.com)
+[debug] [2023-07-03T01:11:42.769Z] [iam] checking project ajoo-office for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-07-03T01:11:42.772Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/ajoo-office:testIamPermissions [none]
+[debug] [2023-07-03T01:11:42.772Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/ajoo-office:testIamPermissions x-goog-quota-user=projects/ajoo-office
+[debug] [2023-07-03T01:11:42.773Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/ajoo-office:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-07-03T01:11:43.652Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/ajoo-office:testIamPermissions 200
+[debug] [2023-07-03T01:11:43.652Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/ajoo-office:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-07-03T01:11:43.653Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ajoo-office [none]
+[debug] [2023-07-03T01:11:44.059Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ajoo-office 200
+[debug] [2023-07-03T01:11:44.059Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ajoo-office {"projectId":"ajoo-office","projectNumber":"547492296181","displayName":"ajoo-office","name":"projects/ajoo-office","resources":{"hostingSite":"ajoo-office","storageBucket":"ajoo-office.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE","etag":"1_ed51de38-2aad-41c1-8cd6-7ee86dde6622"}
+[info] 
+[info] === Deploying to 'ajoo-office'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2023-07-03T01:11:44.063Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/ajoo-office/versions [none]
+[debug] [2023-07-03T01:11:44.064Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/ajoo-office/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
