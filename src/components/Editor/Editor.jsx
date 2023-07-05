@@ -18,6 +18,7 @@ function Editor({ location }) {
   const history = useHistory();
   const { type, timestamp, category, id } = location.state;
   const temKey = useSelector((state) => state.database.key);
+  console.log(temKey);
   const template = useSelector((state) => state.database.editor);
 
   function reducer(state, action) {
@@ -61,10 +62,7 @@ function Editor({ location }) {
         const { title, sub, kind, year } = info;
         let mainimg = null;
         const mainfilt = template.filter(({ type }) => type === "SUMMARY");
-        if (
-          mainfilt.length > 0 &&
-          mainfilt[0].content.img.img
-        ) {
+        if (mainfilt.length > 0 && mainfilt[0].content.img.img) {
           mainimg = {
             resize: mainfilt[0].content.img.resize,
             url: mainfilt[0].content.img.img,

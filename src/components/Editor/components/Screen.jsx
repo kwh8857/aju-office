@@ -183,7 +183,9 @@ function Screen({ temKey, Fstore, Fstorage }) {
                             setFocus={setFoucsIdx}
                             provided={provided}
                             idx={idx}
+                            id={id}
                             template={template}
+                            temKey={temKey}
                           />
                         );
                       }
