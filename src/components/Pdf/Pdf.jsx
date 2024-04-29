@@ -116,9 +116,8 @@ function Pdf() {
       });
       var reader = new FileReader();
       reader.onload = function (e) {
-        const base64 = e.target.result.split(",")[1];
         Fstorage.ref(`pdf/${id}/${file.name}`)
-          .putString(base64, "base64")
+          .put(file)
           .then((result) => {
             result.ref
               .getDownloadURL()
